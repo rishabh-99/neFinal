@@ -12,12 +12,16 @@
   "dependencies": {
     "alert-node": "^2.0.0",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-flash-notification": "^0.5.0",
     "express-session": "^1.16.2",
+    "firebase": "^6.6.2",
     "formidable": "^1.2.1",
-    "node-echo": "^0.1.1"
+    "morgan": "^1.9.1",
+    "node-echo": "^0.1.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.2",

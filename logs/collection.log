@@ -1,0 +1,9 @@
+{"message":{"time":"2019-10-05 15:20:15","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:20:28","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:21:28","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:23:5","name":"Suresh","amount":50000,"case":36},"level":"info"}
+{"message":{"time":"2019-10-07 0:14:19","name":"AA","amount":"AA","case":38},"level":"info"}
+{"message":{"time":"2019-10-07 0:17:0","name":"AA","amount":"AA","case":36},"level":"info"}
+{"message":{"time":"2019-10-08 1:43:37"},"level":"info"}
+{"message":{"time":"2019-10-08 2:27:23"},"level":"info"}
+{"message":{"time":"2019-10-08 2:30:26","caseNo":38,"amount":"171717","name":"Alex"},"level":"info"}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    
+    <title>Document</title>
+    <style>
+  
+  ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.right{
+    float: right;
+}
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+        <ul class="topnav">
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/newUser">New User</a></li>  
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li class="right"><a href="/logout">Log Out</a></li>
+              </ul>
+              <br><br>
+    <form >
+        <label>1st Mnth</label>
+        <input type="text" id="a"></input><br>
+        
+        <label>Balance as on</label>
+        <input type="text" id="b"></input><br>
+
+        <label>CaseNo</label>
+        <input type="text" id="c"></input><br>
+
+        <label>EMI</label>
+        <input type="text" id="d"></input><br>
+
+        <label>Last Month</label>
+        <input type="text" id="e"></input><br>
+
+        <label>Name</label>
+        <input type="text" id="f"></input><br>
+
+        <label>Term</label>
+        <input type="text" id="g"></input><br>
+
+        <label>date</label>
+        <input type="text" id="h"></input><br>
+    
+        <label>loan</label>
+        <input type="text" id="i"></input><br>
+        <button onclick="create()">Submit</button>
+        <script>
+                function create(){
+                    event.preventDefault()
+                    var a=document.getElementById("a").value
+                    var b=document.getElementById("b").value
+                    var c=document.getElementById("c").value
+                    var d=document.getElementById("d").value
+                    var e=document.getElementById("e").value
+                    var f=document.getElementById("f").value
+                    var g=document.getElementById("g").value
+                    var h=document.getElementById("h").value
+                    var i=document.getElementById("i").value
+            
+                   var data={
+                       "a":a,
+                       "b":b,
+                       "c":c,
+                       "d":d,
+                       "e":e,
+                       "f":f,
+                       "g":g,
+                       "h":h,
+                       "i":i,
+                   }
+
+                   
+                   console.log(data)
+                   axios.post('/newUser', {data  })
+                }
+            </script>
+
+</body>
+
+</html>

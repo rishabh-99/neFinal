@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+
+        <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin:0px;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 33.33%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .try[id="aa"]{
+    width:95%;
+    
+}
+}
+
+
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+.card:hover {
+  border: 2px solid #000000;
+}
+.try{
+    width:45%;
+    height: 85vh;
+    overflow-y:scroll;
+    border: 2px solid #000000;
+    margin-left: 2%;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The Modal (background) */
+.modal2{
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal2 Content */
+.modal-content2 {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close2 {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close2:hover,
+.close2:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.right{
+    float: right;
+}
+
+</style>
+</head>
+<body>
+    <ul class="topnav">
+        <li><a href="/">Home</a></li>
+        <li><a  href="/newUser">New User</a></li>  
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a class="active" href="/display">Display Users</a></li>
+        <li class="right"><a href="/logout">Log Out</a></li>
+          </ul>
+<br><br>
+
+<div class="try" id="aa">
+       
+              
+</div>
+<div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+         <div id="modal-data" class="bbc"></div>
+        </div>
+      
+      </div>
+<div id="myModal2" class="modal2">
+
+          <!-- Modal content -->
+          <div class="modal-content2">
+            <span class="close2">&times;</span>
+           <div id="modal-data2" class="bbc"></div>
+          </div>
+        
+        </div>
+
+      
+<script>
+    var ab;
+    var a;
+    var numberCase;
+    var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+var modal2 = document.getElementById("myModal2");
+var span2 = document.getElementsByClassName("close2")[0];
+
+
+
+
+    function onLoad(){
+     
+        
+      var firebaseConfig = {
+    apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
+    authDomain: "nefirebase-7624e.firebaseapp.com",
+    databaseURL: "https://nefirebase-7624e.firebaseio.com",
+    projectId: "nefirebase-7624e",
+    storageBucket: "",
+    messagingSenderId: "75788997805",
+    appId: "1:75788997805:web:cfa574138eef051c352224"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+var database=firebase.database()
+var ref=database.ref("/users")
+  ref.on('value',gotData,errData)
+  
+  
+  function gotData(response){
+console.log(response)
+   ab=response.val();
+   a=Object.keys(ab) 
+  
+   function getHTML(arr){
+       var s=""
+       var count=1                                  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
+       for(var i=0;i<arr.length;i++){
+         if(ab[arr[i]]!=null){
+            if(count==1){
+               s=s.concat(`<div class="row">`)
+           }
+        var elem=`<div class="column">
+    <div class="card" onclick="showMeFiles(${arr[i]})">
+      <h3>${arr[i]}</h3>
+    </div>
+  </div>`
+        s=s.concat(elem)
+        if(count==3){
+            s=s.concat("</div>")
+                count=0;
+        }
+        count++
+         }
+       }
+       
+       return s
+   }
+
+ var conten= getHTML(a)
+  
+
+  document.getElementById("aa").innerHTML=conten
+  
+ 
+  
+  }
+    
+  
+  function errData(err){
+      console.log(err)
+  }
+
+  
+}
+onLoad()
+
+
+    
+    
+       function showMeFiles(caseNo){
+    modal.style.display = "block";
+    console.log(ab[caseNo])
+        numberCase=caseNo;
+     
+    
+   function edit(){
+       var dataModal=`<p>1-st month: ${ab[caseNo]["1st Mnth"]}</p>
+       <p>Balance as on: ${ab[caseNo]["Balance as on"]}</p>
+       <p>EMI: ${ab[caseNo]["EMI"]}</p>
+       <p>Last month: ${ab[caseNo]["Last Month"]}</p>
+       <p>Name: ${ab[caseNo]["Name"]}</p>
+       <p>Term: ${ab[caseNo]["Term"]}</p>
+       <p>Date: ${ab[caseNo]["date"]}</p>
+       <p>loan: ${ab[caseNo]["loan"]}</p>
+       <button onclick="recieve()">Recieve</button>
+       <button onclick=update()>Update</button>`
+        document.getElementById("modal-data").innerHTML=dataModal
+        // document.getElementsByClassName("bbc").innerHTML=dataModal
+    }
+edit()
+
+}
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+  }
+  span2.onclick = function() {
+  modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+  }
+
+  function recieve(){
+      
+     
+
+
+      function recievedBy(caseNo){
+        modal2.style.display="block"
+                  var dataModal=`<form >
+        <label>Enter Password</label>
+        <input type="password" id="pass"></input><br>
+        <button type ="submit" onclick="authNewRecieve(${caseNo})">Okay</button>
+        
+
+        </form>`
+        document.getElementById("modal-data2").innerHTML=dataModal
+       
+    
+
+
+}
+recievedBy(numberCase);
+
+
+
+
+  }
+  function authNewRecieve(caseNo){
+                  event.preventDefault()
+                  var pass=document.getElementById("pass").value
+                  var data={
+                    "pass":pass,
+                    "caseNo":caseNo,
+                    "amount":ab[caseNo]["EMI"],
+                    "name":"Alex"
+                  }
+                  console.log("AAAAAAAAAAaa")
+                  axios.post('/recieve', {data  }).then(function(res){
+                    alert(res.data)
+                    modal2.style.display="none"
+                    modal2.style.display="none"
+                  })
+                }
+  
+  
+
+
+
+function update(){
+  var dataModal=`<form >
+        <label>1st Mnth</label>
+        <input type="text" id="a"></input><br>
+        
+        <label>Balance as on</label>
+        <input type="text" id="b"></input><br>
+
+        <label>Case No</label>
+        <input readonly type="text" id="c"></input><br>
+
+        <label>EMI</label>
+        <input type="text" id="d"></input><br>
+
+        <label>Last Month</label>
+        <input type="text" id="e"></input><br>
+
+        <label>Name</label>
+        <input type="text" id="f"></input><br>
+
+        <label>Term</label>
+        <input type="text" id="g"></input><br>
+
+        <label>date</label>
+        <input type="text" id="h"></input><br>
+    
+        <label>loan</label>
+        <input type="text" id="i"></input><br>
+        <button onclick="create()">Submit</button>
+        </form>`
+        document.getElementById("modal-data").innerHTML=dataModal
+        document.getElementById("a").value=ab[numberCase]["1st Mnth"]
+        document.getElementById("b").value=ab[numberCase]["Balance as on"]
+        document.getElementById("c").value=ab[numberCase]["CaseNo"]
+        document.getElementById("d").value=ab[numberCase]["EMI"]
+        document.getElementById("e").value=ab[numberCase]["Last Month"]
+        document.getElementById("f").value=ab[numberCase]["Name"]
+        document.getElementById("g").value=ab[numberCase]["Term"]
+        document.getElementById("h").value=ab[numberCase]["date"]
+        document.getElementById("i").value=ab[numberCase]["loan"]
+
+       
+}
+var dataNew
+
+function create(){
+ event.preventDefault()
+                    var a=document.getElementById("a").value
+                    var b=document.getElementById("b").value
+                    var c=document.getElementById("c").value
+                    var d=document.getElementById("d").value
+                    var e=document.getElementById("e").value
+                    var f=document.getElementById("f").value
+                    var g=document.getElementById("g").value
+                    var h=document.getElementById("h").value
+                    var i=document.getElementById("i").value
+            
+                   dataNew={
+                       '1st Mnth':a,
+                       'Balance as on':b,
+                       'CaseNo':c,
+                       'EMI':d,
+                       'Last Month':e,
+                       'Name':f,
+                       'Term':g,
+                       'date':h,
+                       'loan':i
+                   }
+
+                   
+                  //  console.log(data)
+                  //  axios.post('/updateUser', {data  })
+                  //  modal.style.display = "none";
+                  modal2.style.display="block"
+                  var dataModal=`<form >
+        <label>Enter Password</label>
+        <input type="password" id="pass"></input><br>
+        <button type ="submit" onclick="authNewUser()">Okay</button>
+        
+
+        </form>`
+        document.getElementById("modal-data2").innerHTML=dataModal
+
+                }
+                function authNewUser(){
+                  event.preventDefault()
+                  var pass=document.getElementById("pass").value
+                  var data={
+                    "pass":pass,
+                    "data":dataNew
+                  }
+                  console.log("AAAAAAAAAAaa")
+                  axios.post('/updateUser', {data  }).then(function(res){
+                    alert(res.data)
+                    modal2.style.display="none"
+                    modal.style.display="none"
+                  })
+                }
+
+
+
+
+
+</script>
+
+</body>
+</html>

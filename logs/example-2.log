@@ -1,0 +1,11 @@
+{"message":"Hello, Winston!","level":"info"}
+{"message":"aa","level":"info"}
+{"message":"aa","level":"info"}
+{"message":"aa","level":"info"}
+{"message":"2019-10-05 15:9:34Ramesh10000","level":"info"}
+{"message":"bbbbbb","level":"info"}
+{"message":{"time":"2019-10-05 15:12:5","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:12:39","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:16:16","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:18:49","name":"Ramesh","amount":10000},"level":"info"}
+{"message":{"time":"2019-10-05 15:19:40","name":"Ramesh","amount":10000},"level":"info"}

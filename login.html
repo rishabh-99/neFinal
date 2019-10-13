@@ -1,393 +1,339 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NE Login</title>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<style>body {
-    font-family: 'Raleway', sans-serif;
-    background: url("/images/44.png");
-    background-repeat: no-repeat;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Document</title>
+  <style>
+  
+/* BASIC */
 
-
-  }
-  
-  .wrapper {
-    width: 800px;
-    height: 600px;
-    position: relative;
-    margin: 3% auto;
-    /* box-shadow: 2px 18px 70px 0px #9D9D9D; */
-    border:2px solid #ffffff;
-    border-radius: 30px;
-    overflow: hidden;
-    color: #e051a9;
-  }
-  
-  .login-text {
-    width: 800px;
-    height: 450px;
-
-    position: absolute;
-    top: -600px;
-    box-sizing: border-box;
-    padding: 6%;
-    transition: all .5s ease-in-out;
-    transition-duration: 1.0s;   
-    z-index: 11;
-  }
-  
-  .text {
-    margin-left: 20px;
-    color: #fff;
-    display: none;
-    transition: all 0.5s ease-in-out;
-    transition-delay: 0.3s;
-  }
-  .text a, .text a:visited {
-    font-size: 36px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    display: block;
-  }
-  .text hr {
-    width: 10%;
-    float: left;
-    background-color: #fff;
-    font-size: 16px;
-  }
-  .text input {
-    margin-top: 30px;
-    height: 40px;
-    width: 300px;
-    border-radius: 15px;
-    border: none;
-    background-color: #444;
-    opacity: 0.6;
-    outline: none;
-    color: #fff;
-    padding-left: 50px;
-    background-image: url("/images/key3.png");
-    background-repeat: no-repeat;
-    
-  }
-  .text input[type=text] {
-    margin-top: 60px;
-    border-radius:15px;
-    background-image: url("/images/user-icon2.png");
-    background-repeat: no-repeat;
-
-  }
-  .text button {
-    margin-top: 60px;
-    height: 40px;
-    width: 140px;
-    outline: none;
-  }
-  .text .login-btn {
-    height: 40px;
-    width: 180px;
-    border: 2px solid #ffffff;
-    border-radius: 20px;
-    background: linear-gradient(to left, #ab68ca, #de67a3);
-    color: #fff;
-    font-weight: bolder;
-    margin-top: 30px;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .text .signup-btn {
-    background: transparent;
-    border: 2px solid #fff;
-    border-radius: 2px;
-    color: #fff;
-    margin-left: 30px;
-  }
-  
-  .cta {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #696a86;
-    border: 2px solid #fff;
-    position: absolute;
-    bottom: -30px;
-    left: 370px;
-    color: #fff;
-    outline: none;
-    cursor: pointer;
-    z-index: auto;
-  }
-  
-  .call-text {
-    /* background-color: #fff; */
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-   
-    box-sizing: border-box;
-    text-align: center;
-
-  }
-  .call-text h1 {
-    font-size: 42px;
-    margin-top: 10%;
-    color: #696a86;
-  }
-  .call-text h1 span {
-    color: #333;
-    font-weight: bolder;
-  }
-  .call-text button[type="submit"] {
-    height: 40px;
-    width: 360px;
-    position:absolute;
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(to left, #ab68ca, #de67a3);
-    color: #fff;
-    font-weight: bolder;
-   left: 420px;
-   bottom:10px;
-    cursor: pointer;
-    outline: none;
-  }
-  
-  .call-text button {
-    height: 40px;
-    width: 360px;
-    position:absolute;
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(to left, #ab68ca, #de67a3);
-    color: #fff;
-    font-weight: bolder;
-   left: 20px;
-   bottom:10px;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .show-hide {
-    display: block;
-  }
-  .show-hide2 {
-    display:none;
-  }
-  
-  .expand {
-    transform: translateY(600px);
-  }
-  .form-inp{
-    width:600px;
-    height:600px;
-  }
-::placeholder{
-  color: #ffffff;
-  
-}
-  .call-text form{
-  /* top: 50%;
-  left: 50%; */
-  background-image: url("/images/file-icon.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  width: 757px;
-  height: 515px;
-   margin-left: 20px;
-   border-radius: 15px;
-  margin-bottom:20px;
-  margin-top:20px;
-  /* margin-right:20px;  */
-   border: 1.5px dashed #ffffff; 
-  /* box-shadow: 2px 20px 40px 16px rgba(0,0,0,0.22); */
+html {
+  background-color: #56baed;
 }
 
-.call-text img{
-  position: absolute;
-  top:300px;
-  left:375px;
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+a {
+  color: #92badd;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+h2 {
   text-align: center;
-  line-height: 170px;
-  color: #000000;
-  font-family: Arial;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display:inline-block;
+  margin: 40px 8px 10px 8px; 
+  color: #cccccc;
 }
 
-.call-text form input{
- 
+
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+
+/* TABS */
+
+h2.inactive {
+  color: #cccccc;
+}
+
+h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #5fbae9;
+}
+
+
+
+/* FORM TYPOGRAPHY*/
+
+input[type=button], input[type=submit], input[type=reset]  {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+  background-color: #39ace7;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+input {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input:placeholder {
+  color: #cccccc;
+}
+
+
+
+/* ANIMATIONS */
+
+/* Simple CSS3 Fade-in-down Animation */
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+/* Simple CSS3 Fade-in Animation */
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fadeIn {
+  opacity:0;
+  -webkit-animation:fadeIn ease-in 1;
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:1s;
+  -moz-animation-duration:1s;
+  animation-duration:1s;
+}
+
+.fadeIn.first {
+  -webkit-animation-delay: 0.4s;
+  -moz-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.fadeIn.second {
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.fadeIn.third {
+  -webkit-animation-delay: 0.8s;
+  -moz-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+}
+
+.fadeIn.fourth {
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+/* Simple CSS3 Fade-in Animation */
+.underlineHover:after {
+  display: block;
+  left: 0;
+  bottom: -10px;
+  width: 0;
+  height: 2px;
+  background-color: #56baed;
+  content: "";
+  transition: width 0.2s;
+}
+
+.underlineHover:hover {
+  color: #0d0d0d;
+}
+
+.underlineHover:hover:after{
+  width: 100%;
+}
+
+
+
+/* OTHERS */
+
+*:focus {
+    outline: none;
+} 
+
+#icon {
+  width:60%;
+}
+ul {
+  list-style-type: none;
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
-  outline: none;
-  opacity: 0;
-  /* background: #000000; */
-  cursor: pointer;
+  overflow: hidden;
+  background-color: #333;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
-.emsg{
-margin: 0;
 
+li {
+  float: left;
 }
-.pmsg{
-margin: 0;
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
+
+li a:hover {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.right{
+  float: right;
+}
+
   </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div class="wrapper">
-  <div class="login-text expand">
-    <!-- <button class="cta"><i class="fas fa-chevron-up fa-1x"></i></button> -->
-    <div class="text show-hide">
-      <a href="">Login</a>
-      <hr>
-      <br>
-      <form >
-        <input type="text" name="email" id="email" placeholder="Username" required>
-        <br>
-        <div class="emsg"></div>
-        <input type="password" name="password" id="password" placeholder="Password" required>
-        <br>
-        <div class="pmsg"></div>
-        <button type="submit" onclick="login()" class="login-btn" id="subButn">Log In</button>
-      </form>
-     
-    </div>
-    
-  </div>
-  <div class="call-text show-hide2">
-    <form > <!-- ALL Correct till now s2o s2top!!!!!! -->
-      <input type="file" id="file" name="filetoupload">
-     
-      <button onclick="upload()">Upload</button>
+    <ul class="topnav">
+        <li><a class="active" href="/">Home</a></li>
+        <li><a href="/newUser">New User</a></li>  
+        <li><a  href="/dashboard">Dashboard</a></li>
+        <li><a  href="/display">Display Users</a></li>
+        <li class="right"><a href="/logout">Log Out</a></li>
+      </ul>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
       
-        </form>
-        <button type="submit" onclick="logout()">Logout</button>
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+          </div>
       
-  </div>
-    
-  </div>
-
-</div>
-<!-- partial -->
-  <script >
-  var res="";
-    var emsg=document.querySelector(".emsg");
-    var pmsg=document.querySelector(".pmsg");
-  var cta = document.querySelector(".cta");
-    var callText = document.querySelector(".call-text");
-    var check = 1;
- function login(){
-   event.preventDefault()
-   
-   var email = document.getElementById("email").value;
-   var password = document.getElementById("password").value;
-
-   if(email=""){
-     emsg.innerHTML = "<p>Email cannot be empty.<p>"
-   }
-   if(password=""){
-    pmsg.innerHTML = "<p>Password cannot be empty.<p>"
-   })
-   console.log(email+" "+password)
-   axios.post('/login', {
-    "email": email,
-    "password": password
-  })
-  .then(function (response) {
-    console.log(response.data);
-    if(response.data=="Hey"){
-    var text =  document.querySelector(".text");
-    var loginText =  document.querySelector(".login-text");
-    text.classList.toggle('show-hide');
-    loginText.classList.toggle('expand');
-    callText.classList.toggle('show-hide2');
-
-    if(check == 0)
-    {
-        // cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
-        check++;
-      // callText.innerHTML = "";    
-    }
-    else
-    {
-        // cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
-        check = 0;
-        // callText.innerHTML = "<form><input type=\"file\"></form>"; 
-    }
-
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
- 
- }
-
- function logout(){
-   console.log("AAAAAAAAA")
-   axios.post('/logout')
-  .then(function (response) {
-    if(response.data=="loggedout"){
-      var text =  document.querySelector(".text");
-    var loginText =  document.querySelector(".login-text");
-    text.classList.toggle('show-hide');
-    loginText.classList.toggle('expand');
-    callText.classList.toggle('show-hide2');
-document.getElementById("email").value="";
-document.getElementById("password").value="";
-    alert("Logout Successful!")
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-  }
- 
-function upload(){
-  event.preventDefault();
-  var formData = new FormData();
-var file = document.querySelector('#file');
-formData.append("filetoupload", file.files[0]);
-axios.post('fileupload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-})
-.then(function(response){
-  // console.log(response)
-  alert(response.data)
-})
-}
-
-
-
-// cta.addEventListener('click', function(e){
-//     var text = e.target.nextElementSibling;
-//     var loginText = e.target.parentElement;
-//     text.classList.toggle('show-hide');
-//     loginText.classList.toggle('expand');
-//     callText.classList.toggle('show-hide2');
-
-//     if(check == 0)
-//     {
-//         cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
-//         check++;
-//       // callText.innerHTML = "";    
-//     }
-//     else
-//     {
-//         cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
-//         check = 0;
-//         // callText.innerHTML = "<form><input type=\"file\"></form>"; 
-//     }
-// })
-  </script>
-
+          <!-- Login Form -->
+          <form method="POST" action="/login">
+            <input type="text" id="username" class="fadeIn second" name="login" placeholder="login">
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+            <input type="submit" class="fadeIn fourth" value="Log In">
+          </form>
+      
+         
+        </div>
+      </div>
+  
 </body>
 </html>
