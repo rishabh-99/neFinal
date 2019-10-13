@@ -12,6 +12,7 @@
     <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/libs/css/style.css">
     <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -27,70 +28,70 @@
                                         <div class="form-group row">
                                             <label class="col-12 col-sm-3 col-form-label text-sm-right">1st Month</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="1st Month" required="" placeholder="Type something" class="form-control">
+                                                <input type="date" id="1st Month" required="" placeholder="Select Date" class="form-control">
                                             </div>
                                         </div>
                                         
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Balance As On</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="Balance As On" required="" placeholder="eg. 1000" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Case No</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="caseNo" required="" placeholder="Type something" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">EMI</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="EMI" required="" placeholder="Eg. 1000" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Last Month</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="date" id="Last Month" required="" placeholder="Type something" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Name</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="Name" required="" placeholder="Enter the Name of the User" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Term</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="Term" required="" placeholder="Enter the Term" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Date</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="date" id="Date" required="" placeholder="Enter the starting date" class="form-control">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Required</label>
+                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Loan</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" required="" placeholder="Type something" class="form-control">
+                                                <input type="text" id="Loan" required="" placeholder="Enter the loan amount" class="form-control">
                                             </div>
                                         </div>
                                       
                                         <div class="form-group row text-right">
                                             <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
-                                                <button class="btn btn-space btn-secondary">Cancel</button>
+                                                <button type="submit" onclick="create()" class="btn btn-space btn-primary">Submit</button>
+                                                
                                             </div>                                          
                                         </div>
 
@@ -144,6 +145,10 @@
     <script src="../assets/libs/js/main-js.js"></script>
     <script>
     $('#form').parsley();
+    axios.post('/lastElement')
+          .then(function(res){
+            document.getElementById("caseNo").value=res.data+1
+          })
     </script>
     <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -159,11 +164,48 @@
                         event.preventDefault();
                         event.stopPropagation();
                     }
+                    
                     form.classList.add('was-validated');
                 }, false);
             });
         }, false);
     })();
+
+    
+
+          
+                // function create(){
+                //     event.preventDefault()
+                //     alert("Aaaaa")
+                //     var a=document.getElementById("a").value
+                //     var b=document.getElementById("b").value
+                //     var c=document.getElementById("c").value
+                //     var d=document.getElementById("d").value
+                //     var e=document.getElementById("e").value
+                //     var f=document.getElementById("f").value
+                //     var g=document.getElementById("g").value
+                //     var h=document.getElementById("h").value
+                //     var i=document.getElementById("i").value
+            
+                //    var data={
+                //     '1st Mnth':a,
+                //        'Balance as on':b,
+                //        'CaseNo':c,
+                //        'EMI':d,
+                //        'Last Month':e,
+                //        'Name':f,
+                //        'Term':g,
+                //        'date':h,
+                //        'loan':i
+                //    }
+
+                   
+                //    console.log(data)
+                //    axios.post('/newUser', {data  })
+                // }
+
+
+
     </script>
 </body>
  

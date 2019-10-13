@@ -306,19 +306,20 @@ app.post('/lastElement', (req,res) => {
 var ref=database.ref("/users")
 ref.once('value',gotData,errData).then(function(){
  var l=a.length
- res.send(a[l])
+ res.send(a[l-1])
   
 })
 
 function gotData(data){
-   try{
-       a=Object.keys(data.val())
-   }
-   catch(exce){
-       a=[0,1]
-   }
+    if(data.val()==undefined||data.val()==null){
+        a=a.push(0)
+    }   
+    else{
+        a=Object.keys(data.val())
  
-  // console.log(a.length)
+    }
+    
+  console.log(a.length)
  
 }
   
