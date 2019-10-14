@@ -25,7 +25,7 @@ ref.once('value',gotData,errData)
 function gotData(data){
    a=Object.keys(data.val())
    for(var i=0;i<a.length;i++){
-    database.ref("/users").child(a[i]).update({
+    database.ref("/users").child(a[i]).child("EMI").child('Oct-19').update({
       "moneyRecieved":0
     })
 

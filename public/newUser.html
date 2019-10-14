@@ -6,16 +6,68 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Form Validation</title>
+    <title>NE:New User</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/libs/css/style.css">
     <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+            body {
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+    }
+    
+    
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 0;
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    li a:hover {
+      background-color: #111;
+    }
+    
+    .active {
+      background-color: #4CAF50;
+    }
+    .right{
+        float: right;
+    }
+        
+        </style>
 </head>
 
 <body>
+
+        <ul class="topnav">
+                <li><a  href="/">Home</a></li>
+                <li><a class="active" href="/newUser">New User</a></li>  
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a  href="/display">Display Users</a></li>
+                <li class="right"><a href="/logout">Log Out</a></li>
+              </ul>
+
+
                     <div class="row">
                         <!-- ============================================================== -->
                         <!-- valifation types -->
@@ -24,7 +76,7 @@
                             <div class="card">
                                 <h5 class="card-header">Create New User</h5>
                                 <div class="card-body">
-                                    <form id="validationform" data-parsley-validate="" novalidate="">
+                                    <form id="validationform">
                                         <div class="form-group row">
                                             <label class="col-12 col-sm-3 col-form-label text-sm-right">1st Month</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
@@ -32,21 +84,14 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group row">
+                                        <div class="formpar-group row" id="BDiv">
                                             <label class="col-12 col-sm-3 col-form-label text-sm-right">Balance As On</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
                                                 <input type="text" id="Balance As On" required="" placeholder="eg. 1000" class="form-control">
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Case No</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="caseNo" required="" placeholder="Type something" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
+                                       <div class="form-group row">
                                             <label class="col-12 col-sm-3 col-form-label text-sm-right">EMI</label>
                                             <div class="col-12 col-sm-8 col-lg-6">
                                                 <input type="text" id="EMI" required="" placeholder="Eg. 1000" class="form-control">
@@ -90,9 +135,9 @@
                                       
                                         <div class="form-group row text-right">
                                             <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                                <button type="submit" onclick="create()" class="btn btn-space btn-primary">Submit</button>
+                                                <button onclick="create()" class="btn btn-space btn-primary">Submit</button>
                                                 
-                                            </div>                                          
+                                            </div>                                      
                                         </div>
 
                                         
@@ -110,28 +155,7 @@
                     </div>
            
             </div>
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <div class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                            Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript: void(0);">About</a>
-                                <a href="javascript: void(0);">Support</a>
-                                <a href="javascript: void(0);">Contact Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- end footer -->
-            <!-- ============================================================== -->
+         
         </div>
     </div>
     <!-- ============================================================== -->
@@ -145,65 +169,28 @@
     <script src="../assets/libs/js/main-js.js"></script>
     <script>
     $('#form').parsley();
-    axios.post('/lastElement')
-          .then(function(res){
-            document.getElementById("caseNo").value=res.data+1
-          })
+   
     </script>
     <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
+  
 
     
 
           
-                // function create(){
-                //     event.preventDefault()
-                //     alert("Aaaaa")
-                //     var a=document.getElementById("a").value
-                //     var b=document.getElementById("b").value
-                //     var c=document.getElementById("c").value
-                //     var d=document.getElementById("d").value
-                //     var e=document.getElementById("e").value
-                //     var f=document.getElementById("f").value
-                //     var g=document.getElementById("g").value
-                //     var h=document.getElementById("h").value
-                //     var i=document.getElementById("i").value
-            
-                //    var data={
-                //     '1st Mnth':a,
-                //        'Balance as on':b,
-                //        'CaseNo':c,
-                //        'EMI':d,
-                //        'Last Month':e,
-                //        'Name':f,
-                //        'Term':g,
-                //        'date':h,
-                //        'loan':i
-                //    }
+                function create(){
+                   if(document.getElementById("Balance As On").value!=""&&document.getElementById("1st Month").value!=""&&document.getElementById("EMI").value!=""&&document.getElementById("Last Month").value!=""&&document.getElementById("Name").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Date").value!=""&&document.getElementById("Loan").value!=""){
+                       event.preventDefault()
 
-                   
-                //    console.log(data)
-                //    axios.post('/newUser', {data  })
-                // }
-
+                       axios.post('/newUser', {
+                           
+                    
+                    }).then(function(res){
+                    
+                  })
+                   }
+                }
+                    
 
 
     </script>

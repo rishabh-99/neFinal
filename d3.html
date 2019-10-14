@@ -162,3 +162,361 @@ d3.json("apiPlaceholderURL", function(error, data) {
 	    .on("mouseout", function(){return tip.style("visibility", "hidden");});
      });</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var ab;
+var a;
+var numberCase;
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+
+var modal2 = document.getElementById("myModal2");
+var span2 = document.getElementsByClassName("close2")[0];
+
+
+
+
+function onLoad(){
+ 
+    
+  var firebaseConfig = {
+apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
+authDomain: "nefirebase-7624e.firebaseapp.com",
+databaseURL: "https://nefirebase-7624e.firebaseio.com",
+projectId: "nefirebase-7624e",
+storageBucket: "",
+messagingSenderId: "75788997805",
+appId: "1:75788997805:web:cfa574138eef051c352224"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var database=firebase.database()
+var ref=database.ref("/users")
+ref.on('value',gotData,errData)
+
+
+function gotData(response){
+console.log(response)
+ab=response.val();
+a=Object.keys(ab) 
+
+function getHTML(arr){
+   var s=""
+   var ds=""
+   var ns=""
+   var defaulters=new Array()
+   var normal=new Array()
+   var count=1
+   console.log(arr)   
+   var month = new Array();
+month[0] = "Jan";
+month[1] = "Feb";
+month[2] = "Mar";
+month[3] = "Apr";
+month[4] = "May";
+month[5] = "Jun";
+month[6] = "Jul";
+month[7] = "Aug";
+month[8] = "Sep";
+month[9] = "Oct";
+month[10] = "Nov";
+month[11] = "Dec";
+
+var d = new Date();
+var n = month[d.getMonth()];  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
+var y= d.getFullYear().toString().slice(-2)
+var dat=n+"-"+y
+console.log(dat)
+   for(var i=0;i<arr.length;i++){
+     console.log("a")
+    if(ab[arr[i]].EMI[`${dat}`]["moneyRecieved"]=='1'){
+      normal.push(`${arr[i]}`)
+      
+    }
+    else{
+      defaulters.push(`${arr[i]}`)
+    }
+    
+   }
+   console.log(normal)
+console.log(defaulters) 
+
+for(var k=0;k<defaulters.length;k++){
+        if(count==1){
+           ds=ds.concat(`<div class="row">`)
+       }
+    var elem=`<div class="column">
+<div class="card" onclick="showMeFiles(${defaulters[k]})">
+  <p class="red">${defaulters[k]}</p>
+    <p class="red">${ab[defaulters[k]]["Name"]}</p>
+</div>
+</div>`
+    ds=ds.concat(elem)
+    if(count==4){
+        ds=ds.concat("</div>")
+            count=0;
+    }
+    count++
+  }
+  s=s.concat(ds)
+  for(var k=0;k<normal.length;k++){
+        if(count==1){
+           ns=ns.concat(`<div class="row">`)
+       }
+    var elem=`<div class="column">
+<div class="card" onclick="showMeFiles(${normal[k]})">
+  <h3 class="white">${normal[k]}</h3>
+</div>
+</div>`
+    ns=ns.concat(elem)
+    if(count==4){
+        ns=ns.concat("</div>")
+            count=0;
+    }
+    count++
+  }
+         s=s.concat(ns)
+   return s
+}
+
+
+
+var conten= getHTML(a)
+console.log(conten+"AAAAAAA")
+
+document.getElementById("aa").innerHTML=conten
+
+
+
+}
+
+
+function errData(err){
+  console.log(err)
+}
+
+
+}
+onLoad()
+
+
+
+
+   function showMeFiles(caseNo){
+modal.style.display = "block";
+console.log(ab[caseNo])
+    numberCase=caseNo;
+ 
+
+function edit(){
+   var dataModal=`<p>1-st month: ${ab[caseNo]["1st Mnth"]}</p>
+   <p>Balance as on: ${ab[caseNo]["Balance as on"]}</p>
+   <p>EMI: ${ab[caseNo]["EMI"]}</p>
+   <p>Last month: ${ab[caseNo]["Last Month"]}</p>
+   <p>Name: ${ab[caseNo]["Name"]}</p>
+   <p>Term: ${ab[caseNo]["Term"]}</p>
+   <p>Date: ${ab[caseNo]["date"]}</p>
+   <p>loan: ${ab[caseNo]["loan"]}</p>
+   <button onclick="recieve()">Recieve</button>
+   <button onclick=update()>Update</button>`
+    document.getElementById("modal-data").innerHTML=dataModal
+    // document.getElementsByClassName("bbc").innerHTML=dataModal
+}
+edit()
+
+}
+
+span.onclick = function() {
+modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+span2.onclick = function() {
+modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal2) {
+modal2.style.display = "none";
+}
+}
+
+function recieve(){
+  
+ 
+
+
+  function recievedBy(caseNo){
+    modal2.style.display="block"
+              var dataModal=`<form >
+    <label>Enter Password</label>
+    <input type="password" id="pass"></input><br>
+    <button type ="submit" onclick="authNewRecieve(${caseNo})">Okay</button>
+    
+
+    </form>`
+    document.getElementById("modal-data2").innerHTML=dataModal
+   
+
+
+
+}
+recievedBy(numberCase);
+
+
+
+
+}
+function authNewRecieve(caseNo){
+              event.preventDefault()
+              var pass=document.getElementById("pass").value
+              var data={
+                "pass":pass,
+                "caseNo":caseNo,
+                "amount":ab[caseNo]["EMI"],
+                "name":"Alex"
+              }
+              console.log("AAAAAAAAAAaa")
+              axios.post('/recieve', {data  }).then(function(res){
+                alert(res.data)
+                modal2.style.display="none"
+                modal2.style.display="none"
+              })
+            }
+
+
+
+
+
+function update(){
+var dataModal=`<form >
+    <label>1st Mnth</label>
+    <input type="text" id="a"></input><br>
+    
+    <label>Balance as on</label>
+    <input type="text" id="b"></input><br>
+
+    <label>Case No</label>
+    <input readonly type="text" id="c"></input><br>
+
+    <label>EMI</label>
+    <input type="text" id="d"></input><br>
+
+    <label>Last Month</label>
+    <input type="text" id="e"></input><br>
+
+    <label>Name</label>
+    <input type="text" id="f"></input><br>
+
+    <label>Term</label>
+    <input type="text" id="g"></input><br>
+
+    <label>date</label>
+    <input type="text" id="h"></input><br>
+
+    <label>loan</label>
+    <input type="text" id="i"></input><br>
+    <button onclick="create()">Submit</button>
+    </form>`
+    document.getElementById("modal-data").innerHTML=dataModal
+    document.getElementById("a").value=ab[numberCase]["1st Mnth"]
+    document.getElementById("b").value=ab[numberCase]["Balance as on"]
+    document.getElementById("c").value=ab[numberCase]["CaseNo"]
+    document.getElementById("d").value=ab[numberCase]["EMI"]
+    document.getElementById("e").value=ab[numberCase]["Last Month"]
+    document.getElementById("f").value=ab[numberCase]["Name"]
+    document.getElementById("g").value=ab[numberCase]["Term"]
+    document.getElementById("h").value=ab[numberCase]["date"]
+    document.getElementById("i").value=ab[numberCase]["loan"]
+
+   
+}
+var dataNew
+
+function create(){
+event.preventDefault()
+                var a=document.getElementById("a").value
+                var b=document.getElementById("b").value
+                var c=document.getElementById("c").value
+                var d=document.getElementById("d").value
+                var e=document.getElementById("e").value
+                var f=document.getElementById("f").value
+                var g=document.getElementById("g").value
+                var h=document.getElementById("h").value
+                var i=document.getElementById("i").value
+        
+               dataNew={
+                   '1st Mnth':a,
+                   'Balance as on':b,
+                   'CaseNo':c,
+                   'EMI':d,
+                   'Last Month':e,
+                   'Name':f,
+                   'Term':g,
+                   'date':h,
+                   'loan':i
+               }
+
+               
+              //  console.log(data)
+              //  axios.post('/updateUser', {data  })
+              //  modal.style.display = "none";
+              modal2.style.display="block"
+              var dataModal=`<form >
+    <label>Enter Password</label>
+    <input type="password" id="pass"></input><br>
+    <button type ="submit" onclick="authNewUser()">Okay</button>
+    
+
+    </form>`
+    document.getElementById("modal-data2").innerHTML=dataModal
+
+            }
+            function authNewUser(){
+              event.preventDefault()
+              var pass=document.getElementById("pass").value
+              var data={
+                "pass":pass,
+                "data":dataNew
+              }
+              console.log("AAAAAAAAAAaa")
+              axios.post('/updateUser', {data  }).then(function(res){
+                alert(res.data)
+                modal2.style.display="none"
+                modal.style.display="none"
+              })
+            }
+
+
+
+

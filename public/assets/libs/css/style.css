@@ -3221,7 +3221,13 @@ btn-link
     font-size: 14px;
 }
 
-.card-body {}
+.card-body {
+    height: 100vh;
+}
+.form-aa{
+    display: flex;
+    flex-direction: column;
+}
 
 .card-text {}
 

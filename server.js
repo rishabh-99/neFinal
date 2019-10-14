@@ -161,20 +161,53 @@ app.get('/display', (req, res) => {
 });
 
 app.post('/newUser', (req,res) => {
-    var a=req.body.data;
-      console.log(a)
-    var ref=database.ref("/users")
-    ref.child(1).set({
-        '1st Mnth':a["1st Mnth"],
-        'Balance as on':a["Balance as on"],
-        'CaseNo':a["CaseNo"],
-        'EMI':a["EMI"],
-        'Last Month':a["Last Month"],
-        'Name':a["Name"],
-        'Term':a["Term"],
-        'date':a["date"],
-        'loan':a["loan"]
-    });
+
+     async  function lastElement(){
+        var a=[];
+        // Get a reference to the database service
+        var database = firebase.database();
+      var ref=database.ref("/users")
+      await ref.once('value', gotData,errData).then(function(){
+       var l=a.length
+       console.log(a[l-1])
+       return (a[l-1])
+        
+      })
+      
+      function gotData(data){
+          if(data.val()==undefined||data.val()==null){
+              a=a.push(0)
+          }   
+          else{
+              a=Object.keys(data.val())
+       
+          }
+          
+        console.log("C"+a.length)
+       
+      }
+        
+       
+      function errData(err){
+          console.log(err)
+      }
+    }
+    console.log("AA"+lastElement())
+    
+    // var a=req.body.data;
+    //   console.log(a)
+    // var ref=database.ref("/users")var aa=
+    // ref.child(1).set({
+    //     '1st Mnth':a["1st Mnth"],
+    //     'Balance as on':a["Balance as on"],
+    //     'CaseNo':a["CaseNo"],
+    //     'EMI':a["EMI"],
+    //     'Last Month':a["Last Month"],
+    //     'Name':a["Name"],
+    //     'Term':a["Term"],
+    //     'date':a["date"],
+    //     'loan':a["loan"]
+    // });
     
   
   })
@@ -300,33 +333,7 @@ var jso={
 })
 
 app.post('/lastElement', (req,res) => {
-    var a=[];
-  // Get a reference to the database service
-  var database = firebase.database();
-var ref=database.ref("/users")
-ref.once('value',gotData,errData).then(function(){
- var l=a.length
- res.send(a[l-1])
-  
-})
-
-function gotData(data){
-    if(data.val()==undefined||data.val()==null){
-        a=a.push(0)
-    }   
-    else{
-        a=Object.keys(data.val())
- 
-    }
-    
-  console.log(a.length)
- 
-}
-  
-  console.log("BBBBBBBB"+a)
-function errData(err){
-    console.log(err)
-}
+   
 //  console.log(a)
     
   
@@ -340,5 +347,5 @@ app.use(function (req, res, next) {
 
 
 // start the express server
-app.listen(app.get('port'), () => console.log(`App started on port ${app.get('port')}`));
+app.listen(app.get('port'), () => console.log(`http://localhost:${app.get('port')}`));
 
