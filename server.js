@@ -254,7 +254,7 @@ app.post('/newUser', (req,res) => {
 //    console.log(typeof(key))
 //    console.log(key)
 try {
-    res.send(data.val())
+    res.send(data)
     
 } catch (error) {
     console.log(error)
@@ -270,7 +270,66 @@ try {
   }
 })
 
+app.post('/fireAshish', (req,res) => {
+    var a=[]
+    var resultS
+    var key
+    
 
+
+  var ref=database.ref("/users")
+  ref.on('value',gotData,errData)
+  
+  
+  function gotData(data){
+//    var key=Object.keys(data.val())
+//    console.log(typeof(key))
+//    console.log(key)
+try {
+    res.send(Object.keys(data.val()))
+    
+} catch (error) {
+    console.log(error)
+}
+  
+ 
+  
+  }
+    
+  
+  function errData(err){
+      console.log(err)
+  }
+})
+
+app.post('/fireAshishIndivisual', (req,res) => {
+   var cno=req.body.caseNo;
+
+
+  var ref=database.ref("/users").child(cno)
+  ref.on('value',gotData,errData)
+  
+  
+  function gotData(data){
+//    var key=Object.keys(data.val())
+//    console.log(typeof(key))
+//    console.log(key)
+try {
+    res.send(data)
+    
+} catch (error) {
+    console.log(error)
+}
+  
+ 
+  
+  }
+    
+  
+  function errData(err){
+      console.log(err)
+  }
+})
 app.post('/recieve', (req,res) => {
 
 
