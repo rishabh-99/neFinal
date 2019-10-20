@@ -1,0 +1,102 @@
+/* ######### Style for Drop Down Menu ######### */
+
+.dropmenudiv
+{
+position:absolute;
+top: 0px;
+border: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+border-bottom-width: 0;
+font:bold 12px Verdana;
+line-height:25px;
+z-index:1000;
+width: 160px;
+visibility: hidden;
+}
+
+
+.dropmenudiv a
+{
+width:160px;
+height:25px;
+display: block;
+text-indent: 3px;
+border-bottom: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+text-decoration: none;
+color: #FFFFFF;
+background-image:url("../images/menu-gradient1.jpg");
+
+}
+
+.dropmenudiv a:hover
+{
+background-image:url("../images/menu-ro-gradient.jpg");
+background-repeat:repeat;
+color:#9f6ef0;
+}
+
+.dropmenudiv1
+{
+position:absolute;
+top: 0px;
+border: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+border-bottom-width: 0;
+font:bold 12px Verdana;
+line-height:25px;
+z-index:1000;
+width: 160px;
+visibility: hidden;
+}
+
+
+.dropmenudiv1 a
+{
+width:160px;
+height:25px;
+display: block;
+text-indent: 3px;
+border-bottom: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+text-decoration: none;
+color: #FFFFFF;
+background-image:url("../images/menu-gradient2.jpg");
+
+}
+
+.dropmenudiv1 a:hover
+{
+background-image:url("../images/menu-ro-gradient.jpg");
+background-repeat:repeat;
+color:#005892;
+}
+.dropmenudiv2
+{
+position:absolute;
+top: 0px;
+border: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+border-bottom-width: 0;
+font:bold 12px Verdana;
+line-height:25px;
+z-index:1000;
+width: 160px;
+visibility: hidden;
+}
+
+
+.dropmenudiv2 a
+{
+width:160px;
+height:25px;
+display: block;
+text-indent: 3px;
+border-bottom: 1px solid #FFFFFF; /*THEME CHANGE HERE*/
+text-decoration: none;
+color: #FFFFFF;
+background-image:url("../images/menu-gradient3.jpg");
+
+}
+
+.dropmenudiv2 a:hover
+{
+background-image:url("../images/menu-ro-gradient.jpg");
+background-repeat:repeat;
+color:#ce428c;
+}

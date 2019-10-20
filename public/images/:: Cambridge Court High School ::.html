@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="::%20Cambridge%20Court%20High%20School%20::_files/style.css" type="text/css"><link rel="stylesheet" href="::%20Cambridge%20Court%20High%20School%20::_files/dropdown.css" type="text/css">
+    <script type="text/javascript" language="javascript" src="::%20Cambridge%20Court%20High%20School%20::_files/flash-script.js"></script>
+    <script type="text/javascript" language="javascript" src="::%20Cambridge%20Court%20High%20School%20::_files/dropdown.js"></script>
+    <script language="javascript" src="::%20Cambridge%20Court%20High%20School%20::_files/jquery1.js"></script>
+    <script type="text/javascript" src="::%20Cambridge%20Court%20High%20School%20::_files/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="::%20Cambridge%20Court%20High%20School%20::_files/jquery.css" media="screen"><title>
+	:: Cambridge Court High School ::
+</title><script language="javascript" type="text/javascript">
+    function removePNGBackground() {
+        var arVersion = navigator.appVersion.split("MSIE");
+        var version = parseFloat(arVersion[1]);
+
+        if ((version >= 5.5) && (version < 7) && (document.body.filters)) {
+            for (var i = 0; i < document.images.length; i++) {
+                var img = document.images[i];
+                var imgName = img.src.toUpperCase();
+                if (imgName.substring(imgName.length - 3, imgName.length) == "PNG") {
+                    var imgID = (img.id) ? "id='" + img.id + "' " : "";
+                    var imgClass = (img.className) ? "class='" + img.className + "' " : "";
+                    var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' ";
+                    var imgStyle = "display:inline-block;" + img.style.cssText;
+                    if (img.align == "left") imgStyle = "float:left;" + imgStyle;
+                    if (img.align == "right") imgStyle = "float:right;" + imgStyle;
+                    if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle;
+                    var strNewHTML = "<span " + imgID + imgClass + imgTitle
+             + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+             + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+             + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>";
+                    img.outerHTML = strNewHTML;
+                    i = i - 1;
+                }
+            }
+        }
+    }
+
+    function OpenWindow() {
+        if (screen.width != screen.availWidth) {
+            window.moveTo(0, 0);
+            window.resizeTo(screen.availWidth, screen.availHeight);
+        }
+    }
+
+    // Add click handlers for buttons to show and hide modal popup on pageLoad
+    function pageLoad() {
+        $addHandler($get("showModalPopupClientButton"), 'click', showModalPopupViaClient);
+        $addHandler($get("ctl00_imgBtn_Close"), 'click', hideModalPopupViaClient);
+    }
+
+    function showModalPopupViaClient(ev) {
+        ev.preventDefault();
+        var modalPopupBehavior = $find('programmaticModalPopupBehavior');
+        modalPopupBehavior.show();
+        $get("ctl00_txt_username").focus();
+    }
+
+    function hideModalPopupViaClient(ev) {
+        ev.preventDefault();
+        var modalPopupBehavior = $find('programmaticModalPopupBehavior');
+        modalPopupBehavior.hide();
+    }
+
+    function showMoreModalPopupViaClient(ev) {
+        ev.preventDefault();
+        var modalPopupBehavior = $find('programmaticModalPopupBehavior_More');
+        modalPopupBehavior.show();
+    }
+
+    function hideMoreModalPopupViaClient(ev) {
+        ev.preventDefault();
+        var modalPopupBehavior = $find('programmaticModalPopupBehavior_More');
+        modalPopupBehavior.hide();
+    }
+
+    function hideError() {
+        document.getElementById("ctl00_lbl_Error").style.display = "none";
+        return false;
+    }
+
+</script></head>
+
+<body onload="javascript: OpenWindow(); removePNGBackground();">
+    <form name="aspnetForm" method="post" action="PhotoGallery.aspx" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="BV0w2c/GcdvPQRaldp8bFHMjnydNhL4BwPSB28NQzSV1ck+BLsPdGg6PUsheBPyWmiEiSvLl8Alu94znIubM7GoyDY6+f3Vhj6O6/qV92Y/A3o0YB3kZz2UmKPq6ahH5PdPwT9anyUxptEog1P5tUcaQKZICfKZzk47wIn9I45F3gPWaZjJR78IX0Yqz+ZQ9yme34tcvV5urFClVeQlA1eeFikAQSz/Yv1H5LbEhfg8ZzGCF2wwbkuDwTPFjeyS4piyWIK6cfxseV2SsQPK4FO1S6kYLPFZZfNeSAfljlahDOp8O3N1YzxtU4buGwOvOiOtCV0heUJ6L3UehPiMDNaRIEeUyx1URREH8ukjSndkFrrVojG38123nG0QjGX2Fzi+pBltTgEWf9oRwFecC50Bwcsf24jU8B6jXhuTQJD5M+ccMjKVjFWOYbgQ8lT6Ex3wHpmhdBYGIjqSfBTdZLXIzUuTsvqKIdGIk5v54bZVjZikxp1ELW+ulks9N2AjDf9f2PdAFFHWYLHRZDdJGQi90KulTSbs21Ne7dJw3EhWQvKR28KtxqTLgXx3JUJzgz0U9TXKi5keFIpati4bdVeCfhQc1hO0IpOGCXK9jilMEdNZG0ypSCLQtVgE7ZmfwlCPn6FGySaN6U1MzckVrd8y7dmFopBfo/tPPBKIz2xbp1YnpEXTSh15ASI/aOiWJ6NbkY++SrRFPbHoVI4TPfB744Y26QqIf9gAvsTvOugccMibY7svZuLq0GTXA9IAUbwmwBqDjts0Hs6409xrdGdccBGYQL5jJTe71I3LArdQSVgO9XcrK3+uSTDTXCX60Bc6+kVeypKI938jpLNq8m4fvfj+jZSC18ZdO0pjM1RAWfEkCeOaMWTAIS/UbXxlUSLm5yNgqHBwVyh4U3DOSCeIJUo8=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/WebResource.axd" type="text/javascript"></script>
+
+
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_003.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_009.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_010.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_008.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_006.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_004.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_005.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_002.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_007.axd" type="text/javascript"></script>
+<script src="::%20Cambridge%20Court%20High%20School%20::_files/ScriptResource_011.axd" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="44973887">
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="YcrlYmWEjC8FZjdysxUYOCfrylZHd45xLdxegcIvR9J4rVdoJODUa7TkTsUaLl8h9a934e91RY0GCA23kTwQ9HKNF6R26wtA3I+w8tPJOzR96omjtAbNbGd5wLjPZzUkFIYm7g==">
+</div>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', document.getElementById('aspnetForm'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls([], [], [], 90);
+//]]>
+</script>
+
+    <table id="page" cellspacing="0" cellpadding="0" border="0" align="center">
+        <tbody><tr>
+            <td valign="top" align="center">
+                <div id="main" align="center">
+                    <div class="side_bar">
+                        <ul>
+                            <li><a href="https://www.facebook.com/pages/Cambridge-Court-High-School/180280338699530" target="_blank">
+                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/facebook.png"></a></li>
+                            <li><a href="#">
+                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/twitter.png"></a></li>
+                        </ul>
+                    </div>
+                    <div id="header">
+                        <div class="header1">
+                            <div class="header1-left">
+                                <table width="500" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody><tr>
+                                        
+                                          <td width="422" valign="top" align="left">
+                                            <a href="http://www.cambridgecourtgroup.com/School/Default.aspx" title="Home Page">
+                                                <img style="padding-top: 6px;" src="::%20Cambridge%20Court%20High%20School%20::_files/logo3.png" alt="Cambridge Court High School" width="489" height="66" border="0"></a>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                            <div class="header1-right" align="right">
+                                <table width="130" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody><tr>
+                                        <td width="40" valign="middle" align="center">
+                                            <a href="http://www.cambridgecourtgroup.com/index.html">
+                                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/home-icon1.png" alt="Home" width="29" height="24" border="0"></a>
+                                        </td>
+                                        <td rowspan="2" style="padding-left: 6px; padding-right: 6px;" width="3">
+                                            <img src="::%20Cambridge%20Court%20High%20School%20::_files/seprator1.png" alt="Seprator" width="1" height="35">
+                                        </td>
+                                        <td width="44" valign="middle" align="center">
+                                            <a href="http://www.cambridgecourtgroup.com/School/Sitemap.aspx">
+                                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/site-map1.png" alt="Sitemap" width="22" height="24" border="0"></a>
+                                        </td>
+                                        <td rowspan="2" style="padding-left: 6px; padding-right: 6px;" width="3">
+                                            <img src="::%20Cambridge%20Court%20High%20School%20::_files/seprator1.png" alt="Seprator" width="1" height="35">
+                                        </td>
+                                        <td width="40" valign="middle" align="center">
+                                            <a id="showModalPopupClientButton" onclick="javascript: hideError();" href="#">
+                                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/login.png" alt="Login" width="21" height="24" border="0"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="middle" align="center">
+                                            <a href="http://www.cambridgecourtgroup.com/index.html" class="link1">Home</a>
+                                        </td>
+                                        <td valign="middle" align="center">
+                                            <a href="http://www.cambridgecourtgroup.com/School/Sitemap.aspx" class="link1">Sitemap</a>
+                                        </td>
+                                        <td valign="middle" align="center">
+                                            <a onclick="javascript: hideError();" id="ctl00_lnkBtn_Login" class="link1" href="javascript:__doPostBack('ctl00$lnkBtn_Login','')">Login</a>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                        </div>
+                        <div class="header2">
+                             	
+<link href="::%20Cambridge%20Court%20High%20School%20::_files/js-image-slider.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="::%20Cambridge%20Court%20High%20School%20::_files/js-image-slider.js"></script>
+<div id="sliderFrame">
+        <div id="slider" style="background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll 0% 0%;">
+		<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider13.jpg" style="display: none;">
+              <img src="::%20Cambridge%20Court%20High%20School%20::_files/slider1.jpg" style="display: none;">
+				 <img src="::%20Cambridge%20Court%20High%20School%20::_files/slider2.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slide3.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slide4.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider5.jpg" style="display: none;">
+			    <img src="::%20Cambridge%20Court%20High%20School%20::_files/slider6.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider7.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider8.jpg" style="display: none;">
+			    
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider10.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider11.jpg" style="display: none;">
+				<img src="::%20Cambridge%20Court%20High%20School%20::_files/slider12.jpg" style="display: none;">
+         
+       
+          
+        <div class="mc-caption-bg" style="opacity: 0; visibility: hidden;"><div class="mc-caption" style="visibility: hidden; width: 1009px;"></div></div><div class="mc-caption-bg2" style="opacity: 0; visibility: hidden;"><div class="mc-caption" style="width: 1009px;"></div></div><div class="navBulletsWrapper"><div rel="0" class=""></div><div rel="1" class="active"></div><div rel="2" class=""></div><div rel="3" class=""></div><div rel="4" class=""></div><div rel="5" class=""></div><div rel="6" class=""></div><div rel="7" class=""></div><div rel="8" class=""></div><div rel="9" class=""></div><div rel="10" class=""></div><div rel="11" class=""></div></div><div class="mcBox" style="left: 0px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll 0px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 126px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -126px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 252px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -252px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 378px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -378px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 504px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -504px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 630px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -630px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 756px; top: 0px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -756px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 882px; top: 0px; width: 127px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -882px 0px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 0px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll 0px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 126px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -126px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 252px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -252px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 378px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -378px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 504px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -504px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 630px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -630px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 756px; top: 110px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -756px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 882px; top: 110px; width: 127px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -882px -110px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 0px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll 0px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 126px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -126px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 252px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -252px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 378px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -378px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 504px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -504px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 630px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -630px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 756px; top: 220px; width: 126px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -756px -220px; z-index: 1; position: absolute; opacity: 1;"></div><div class="mcBox" style="left: 882px; top: 220px; width: 127px; height: 110px; background: rgba(0, 0, 0, 0) url(&quot;images/slider1.jpg&quot;) no-repeat scroll -882px -220px; z-index: 1; position: absolute; opacity: 1;"></div></div></div>
+                        </div>
+                        <div class="header3" id="menubar">
+                            
+  <div class="menu" style="padding-left:41px;"><a href="#" rel="dropdownAbout"><img src="::%20Cambridge%20Court%20High%20School%20::_files/ABOUT-US.png" alt="About Us" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px;"><a href="#" rel="dropdownAcademics"><img src="::%20Cambridge%20Court%20High%20School%20::_files/ACADEMICS.png" alt="Academics" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px;"><a href="#" rel="dropdownAdmission" class=""><img src="::%20Cambridge%20Court%20High%20School%20::_files/ADMISSION.png" alt="Admission" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px;"><a href="http://www.cambridgecourtgroup.com/School/Alumni.aspx"><img src="::%20Cambridge%20Court%20High%20School%20::_files/ALUMNI1.png" alt="Alumni" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px;"><a href="http://www.cambridgecourtgroup.com/School/downloads.aspx"><img src="::%20Cambridge%20Court%20High%20School%20::_files/DOWNLOADS1.png" alt="Downloads" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px;"><a href="http://www.cambridgecourtgroup.com/School/PhotoGallery.aspx"><img src="::%20Cambridge%20Court%20High%20School%20::_files/PHOTO-GALLERY-SELECT.png" alt="Photo Gallery" width="116" height="39" border="0"></a></div>
+    <div class="menu" style="padding-left:21px; padding-right:30px;"><a href="http://www.cambridgecourtgroup.com/School/Contactus.aspx"><img src="::%20Cambridge%20Court%20High%20School%20::_files/CONTACT-US.png" alt="Contact Us" width="116" height="39" border="0"></a></div>
+
+                        </div>
+                    </div>
+                    <div id="mid-part" align="center">
+                        <table width="978" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <td width="9" valign="top" align="right">
+                                </td>
+                                <td style="background-position: left top; padding-top: 15px; background-repeat: repeat-x" width="960" valign="top" align="center">
+                                    
+  <script language="javascript" type="text/javascript">
+ $(function() {
+        $('#gallery a').lightBox();
+    });
+</script>
+  <table width="960" cellspacing="0" cellpadding="0" border="0">
+    <tbody><tr>
+      <td style="padding-top:10px;padding-bottom:10px;" valign="top" align="left"><img alt="Photo Gallery" src="::%20Cambridge%20Court%20High%20School%20::_files/photogallery.png"></td>
+    </tr>
+    <tr>
+      <td valign="top" align="left"><div style="width:950px;float:left; text-align: center;">
+          <table id="ctl00_ContentPlaceHolder3_datalist_Gallery" style="width:700px;border-collapse:collapse;" cellspacing="0" border="0">
+	<tbody><tr>
+		<td>
+              <table id="gallery" width="225" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td valign="top" align="center"><a href="http://www.cambridgecourtgroup.com/School/Upload/Gallery/Blue%20Day.jpg" title="Blue Day"><img alt="Blue Day" src="::%20Cambridge%20Court%20High%20School%20::_files/Blue%2520Day.jpg" width="200" height="150" border="0"></a></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center"><b>Blue Day</b></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center">&nbsp;</td>
+                </tr>
+              </tbody></table>
+            </td><td>
+              <table id="gallery" width="225" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td valign="top" align="center"><a href="http://www.cambridgecourtgroup.com/School/Upload/Gallery/Gardening.jpg" title="Eco Friendly"><img alt="Eco Friendly" src="::%20Cambridge%20Court%20High%20School%20::_files/Gardening.jpg" width="200" height="150" border="0"></a></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center"><b>Eco Friendly</b></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center">&nbsp;</td>
+                </tr>
+              </tbody></table>
+            </td><td>
+              <table id="gallery" width="225" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td valign="top" align="center"><a href="http://www.cambridgecourtgroup.com/School/Upload/Gallery/Mehandi.jpg" title="Mehandi"><img alt="Mehandi" src="::%20Cambridge%20Court%20High%20School%20::_files/Mehandi.jpg" width="200" height="150" border="0"></a></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center"><b>Mehandi</b></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center">&nbsp;</td>
+                </tr>
+              </tbody></table>
+            </td><td>
+              <table id="gallery" width="225" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td valign="top" align="center"><a href="http://www.cambridgecourtgroup.com/School/Upload/Gallery/Poster%20making.jpg" title="Poster Making"><img alt="Poster Making" src="::%20Cambridge%20Court%20High%20School%20::_files/Poster%2520making.jpg" width="200" height="150" border="0"></a></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center"><b>Poster Making</b></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center">&nbsp;</td>
+                </tr>
+              </tbody></table>
+            </td>
+	</tr><tr>
+		<td>
+              <table id="gallery" width="225" cellspacing="0" cellpadding="0" border="0">
+                <tbody><tr>
+                  <td valign="top" align="center"><a href="http://www.cambridgecourtgroup.com/School/Upload/Gallery/Cambridge%20Band.jpg" title="Band Masters"><img alt="Band Masters" src="::%20Cambridge%20Court%20High%20School%20::_files/Cambridge%2520Band.jpg" width="200" height="150" border="0"></a></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center"><b>Band Masters</b></td>
+                </tr>
+                <tr>
+                  <td style="padding-top:5px;" valign="top" align="center">&nbsp;</td>
+                </tr>
+              </tbody></table>
+            </td><td></td><td></td><td></td>
+	</tr>
+</tbody></table>
+          <br>
+          <table id="ctl00_ContentPlaceHolder3_dlPaging" style="font-size:11px;border-collapse:collapse;" cellspacing="0" border="0" align="Center">
+	<tbody><tr>
+		<td style="color:Black;font-family:Verdana;font-size:11px;">
+              <a id="ctl00_ContentPlaceHolder3_dlPaging_ctl00_lnkbtnPaging" disabled="disabled" class="link1">1</a>
+            </td>
+	</tr>
+</tbody></table>
+        </div></td>
+    </tr>
+  </tbody></table>
+
+                                </td>
+                                <td width="9" valign="top" align="left">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div id="footer" width:995px;height:35px;"="">
+                        <div class="footer-left">
+                            <a href="http://www.cambridgecourtgroup.com/index.html" class="link">Home</a> | <a href="http://www.cambridgecourtgroup.com/School/Downloads.aspx" class="link">
+                                Downloads</a> | <a href="http://www.cambridgecourtgroup.com/School/Contactus.aspx" class="link">Contact Us</a> | <a href="http://www.cambridgecourtgroup.com/School/Sitemap.aspx" class="link">Sitemap</a></div>
+                        <div class="footer-center">
+                            Powered by: Infoscope Techsolutions (P) Ltd.</div>
+                        <div class="footer-right">
+                            copyright©cambridgecourtgroup.com</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody></table>
+    
+    <div id="ctl00_programmaticPopup" style="display: none; width: 270px; padding: 10px; position: fixed; z-index: 100001;">
+	
+        <table width="270" cellspacing="0" cellpadding="0" border="0">
+            <tbody><tr>
+                <td style="height: 10px" width="10" valign="bottom" align="right">
+                    <img alt="Corner1" src="::%20Cambridge%20Court%20High%20School%20::_files/box-cor-1.png" width="10" height="10">
+                </td>
+                <td style="background-position: left top; background-image: url(images/box-tm1.png);
+                    background-repeat: repeat-x; height: 10px;" width="250" valign="bottom" align="left">
+                    <img alt="Top part" src="::%20Cambridge%20Court%20High%20School%20::_files/box-tm.png" width="10" height="10">
+                </td>
+                <td style="height: 10px" width="10" valign="bottom" align="left">
+                    <img alt="corner2" src="::%20Cambridge%20Court%20High%20School%20::_files/box-cor-2.png" width="10" height="10">
+                </td>
+            </tr>
+            <tr>
+                <td style="background-position: right bottom; background-image: url(images/box-lm1.png);
+                    background-repeat: repeat-y" valign="top" align="right">
+                    <img alt="Mid-part" src="::%20Cambridge%20Court%20High%20School%20::_files/spacer.gif" width="10" height="10">
+                </td>
+                <td style="background-position: 50% bottom; background-image: url(images/box-bg.png);
+                    background-repeat: repeat-x" valign="top" align="right">
+                    <div class="mid1-1">
+                        <table width="250" cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr>
+                                <td width="7" valign="top" align="right">
+                                    <img alt="left-part" src="::%20Cambridge%20Court%20High%20School%20::_files/titlebar-left1.png" width="7" height="25">
+                                </td>
+                                <td style="background-position: left top; background-image: url(images/titlebar-mid1.png);
+                                    background-repeat: repeat-x" valign="middle" align="center">
+                                    <div id="ctl00_programmaticPopupDragHandle" style="cursor: move; color: #FFFFFF;
+                                        text-align: center; font-size: 12px; font-weight: bold;">
+		
+                                        Administrator LogIn
+	</div>
+                                </td>
+                                <td width="7" valign="top" align="left">
+                                    <img alt="right-part" src="::%20Cambridge%20Court%20High%20School%20::_files/titlebar-right1.png" width="7" height="25">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <table style="width: 250px;" cellspacing="2" cellpadding="2" border="0">
+                        <tbody><tr>
+                            <td colspan="3" valign="bottom" align="center">
+                                <img src="::%20Cambridge%20Court%20High%20School%20::_files/spacer.gif" alt="Administrator Login" width="1" height="2">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" valign="bottom" align="center">
+                                <span id="ctl00_lbl_Error" style="color:Maroon;font-size:11px;font-weight:bold;display: none;">Invalid Username or Password !!</span>&nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;" valign="middle" align="left">
+                                Username
+                            </td>
+                            <td style="font-weight: bold;" valign="middle" align="left">
+                                :
+                            </td>
+                            <td valign="middle" align="left">
+                                <input name="ctl00$txt_username" type="text" id="ctl00_txt_username" style="background-color: #F9F6F6; border: 1px solid #858484;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;" valign="middle" align="left">
+                                Password
+                            </td>
+                            <td style="font-weight: bold;" valign="middle" align="left">
+                                :
+                            </td>
+                            <td valign="middle" align="left">
+                                <input name="ctl00$txt_Password" type="password" id="ctl00_txt_Password" style="background-color: #F9F6F6;
+                                    border: 1px solid #858484;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td align="left">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td valign="middle" align="left">
+                                <input type="image" name="ctl00$imgBtn_Login" id="ctl00_imgBtn_Login" src="::%20Cambridge%20Court%20High%20School%20::_files/login-btn.png" style="border-width:0px;">&nbsp;<input type="image" name="ctl00$imgBtn_Close" id="ctl00_imgBtn_Close" src="::%20Cambridge%20Court%20High%20School%20::_files/close-btn.png" style="border-width:0px;">
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+                <td style="background-position: left top; background-image: url(images/box-rm1.png);
+                    background-repeat: repeat-y" valign="top" align="left">
+                    <img alt="Mid-part" src="::%20Cambridge%20Court%20High%20School%20::_files/spacer.gif" width="10" height="10">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" align="right">
+                    <img alt="corner4" src="::%20Cambridge%20Court%20High%20School%20::_files/box-cor-4.png" width="10" height="10">
+                </td>
+                <td style="background-position: left bottom; background-image: url(images/box-dm1.png);
+                    background-repeat: repeat-x" valign="top" align="left">
+                    <img alt="Down Part" src="::%20Cambridge%20Court%20High%20School%20::_files/box-dm.png" width="10" height="10">
+                </td>
+                <td valign="top" align="left">
+                    <img alt="corner3" src="::%20Cambridge%20Court%20High%20School%20::_files/box-cor-3.png" width="10" height="10">
+                </td>
+            </tr>
+        </tbody></table>
+    
+</div>
+    
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.initialize();
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"ctl00_programmaticPopup","PopupDragHandleControlID":"ctl00_programmaticPopupDragHandle","dynamicServicePath":"/School/PhotoGallery.aspx","id":"programmaticModalPopupBehavior"}, null, null, $get("ctl00_lnkBtn_Login"));
+});
+//]]>
+</script>
+<div id="programmaticModalPopupBehavior_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;" class="modalBackground"></div></form>
+    <div id="dropdownAbout" class="dropmenudiv">
+        <a href="http://www.cambridgecourtgroup.com/School/History.aspx" title="History">History</a> <a href="http://www.cambridgecourtgroup.com/School/Facilities.aspx" title="Facilites">
+            Facilites</a> <a href="http://www.cambridgecourtgroup.com/School/Norms.aspx" title="Norms">Norms</a> <a href="http://www.cambridgecourtgroup.com/School/Infrastructure.aspx" title="Infrastructure">Infrastructure</a> <a href="http://www.cambridgecourtgroup.com/School/Events_Activites.aspx" title="Activities">
+                    Activities</a> 
+    </div>
+    <div id="dropdownAcademics" class="dropmenudiv1">
+        <a href="http://www.cambridgecourtgroup.com/School/Bulletin.aspx" title="Bulletin">Bulletin</a>
+        
+		<a href="http://www.cambridgecourtgroup.com/School/Achievements.aspx" title="Achievements">Achievements</a>
+
+    </div>
+    <div id="dropdownAdmission" class="dropmenudiv2" style="height: auto; overflow: hidden; visibility: hidden; left: -1000px; top: -1000px;">
+        <a href="http://www.cambridgecourtgroup.com/School/Rules_Regulations.aspx" title="Rules &amp; Regulations">Rules &amp; Regulations</a>
+        
+        <a href="http://www.cambridgecourtgroup.com/School/Others.aspx" title="Others">Others</a>
+    </div>
+    <script type="text/javascript" language="javascript">
+        cssdropdown.startchrome("menubar")
+    </script>
+
+
+<div id="jquery-overlay" style="background-color: rgb(0, 0, 0); opacity: 0.8; width: 1838px; height: 975px;"></div><div id="jquery-lightbox" style="top: 94.2px; left: 0px;"><div id="lightbox-container-image-box" style="width: 570px; display: block; height: 470px;"><div id="lightbox-container-image"><img id="lightbox-image" style="display: inline; width: 550px; height: 450px;" src="::%20Cambridge%20Court%20High%20School%20::_files/Gardening.jpg"><div style="display: block;" id="lightbox-nav"><a href="#" id="lightbox-nav-btnPrev" style="display: block; height: 470px; background: transparent url(&quot;images/lightbox-blank.gif&quot;) no-repeat scroll 0% 0%;"></a><a href="#" id="lightbox-nav-btnNext" style="display: block; height: 470px; background: rgba(0, 0, 0, 0) url(&quot;images/lightbox-btn-next.gif&quot;) no-repeat scroll right 15%;"></a></div><div id="lightbox-loading" style="display: none;"><a href="#" id="lightbox-loading-link"><img src="::%20Cambridge%20Court%20High%20School%20::_files/lightbox-ico-loading.gif"></a></div></div></div><div id="lightbox-container-image-data-box" style="display: block; width: 550px;"><div id="lightbox-container-image-data"><div id="lightbox-image-details"><span id="lightbox-image-details-caption" style="display: inline;">Eco Friendly</span><span id="lightbox-image-details-currentNumber" style="display: block;">Image 2 of 5</span></div><div id="lightbox-secNav"><a href="#" id="lightbox-secNav-btnClose"><img src="::%20Cambridge%20Court%20High%20School%20::_files/lightbox-btn-close.gif"></a></div></div></div></div></body></html>
