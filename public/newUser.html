@@ -179,10 +179,18 @@
 
           
                 function create(){
-                   if(document.getElementById("Balance As On").value!=""&&document.getElementById("1st Month").value!=""&&document.getElementById("EMI").value!=""&&document.getElementById("Last Month").value!=""&&document.getElementById("Name").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Date").value!=""&&document.getElementById("Loan").value!=""){
+                   if(document.getElementById("Balance As On").value!=""&&document.getElementById("1st Month").value!=""&&document.getElementById("EMI").value!=""&&document.getElementById("Last Month").value!=""&&document.getElementById("Name").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Date").value!=""&&document.getElementById("Loan").value!=""){
                        event.preventDefault()
 
                        axios.post('/newUser', {
+                           "Balance":document.getElementById("Balance As On").value,
+                           "1st Month":document.getElementById("1st Month").value,
+                           "EMI":document.getElementById("EMI").value,
+                           "Last Month":document.getElementById("Last Month").value,
+                           "Name":document.getElementById("Name").value,
+                           "Term":document.getElementById("Term").value,
+                           "Date":document.getElementById("Date").value,
+                           "Loan":document.getElementById("Loan").value
                            
                     
                     }).then(function(res){

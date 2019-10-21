@@ -162,15 +162,54 @@ app.get('/display', (req, res) => {
 
 app.post('/newUser', (req,res) => {
 
-     async  function lastElement(){
+     
         var a=[];
         // Get a reference to the database service
         var database = firebase.database();
       var ref=database.ref("/users")
-      await ref.once('value', gotData,errData).then(function(){
+       ref.once('value', gotData,errData).then(function(){
        var l=a.length
        console.log(a[l-1])
-       return (a[l-1])
+       var nextEle=parseInt(a[l-1])+1;
+       console.log(req.body)
+       var EMI={}
+    for(var i=1;i<=req.body["Term"];i++){
+        var month="Month "+i;
+        EMI[month]={
+            "AmountRecieved":"NIL",
+            "ModeCash":"NIL",
+            "ModeCheque":"NIL",
+            "ModeDeposit":"NIL",
+            "RecievedOn":"NIL",
+            "RecievedBy":"NIL",
+            "MoneyRecieved":0
+        }
+    }
+    console.log(EMI)
+        var ref=database.ref("/users")
+        ref.child(nextEle).set({
+        '1st Mnth':req.body["1st Month"],
+        'Balance':req.body["Balance"],
+        "Cheque":"",
+        'Date':req.body["Date"],
+        "EMI":EMI,
+        'EMII':req.body["EMI"],
+        'Last Month':req.body["Last Month"],
+        'Name':req.body["Name"],
+        'Term':req.body["Term"],
+        "Total":"",
+        "due":"",
+        'loan':req.body["Loan"],
+        "CurrentMonth":"Month 1"
+    });
+    
+    var ref=database.ref("/users")
+        ref.child(nextEle).update({
+        EMI
+    }).then(function(res){
+        console.log(res)
+    })
+      
         
       })
       
@@ -191,23 +230,12 @@ app.post('/newUser', (req,res) => {
       function errData(err){
           console.log(err)
       }
-    }
-    console.log("AA"+lastElement())
+    
+    
     
     // var a=req.body.data;
     //   console.log(a)
-    // var ref=database.ref("/users")var aa=
-    // ref.child(1).set({
-    //     '1st Mnth':a["1st Mnth"],
-    //     'Balance as on':a["Balance as on"],
-    //     'CaseNo':a["CaseNo"],
-    //     'EMI':a["EMI"],
-    //     'Last Month':a["Last Month"],
-    //     'Name':a["Name"],
-    //     'Term':a["Term"],
-    //     'date':a["date"],
-    //     'loan':a["loan"]
-    // });
+   
     
   
   })
