@@ -24,9 +24,26 @@ ref.once('value',gotData,errData)
 
 function gotData(data){
    a=Object.keys(data.val())
+   var EMI={}
+   for(var i=1;i<=10;i++){
+    var month=""+i;
+    EMI[month]={
+        "AmountRecieved":"NIL",
+        "ModeCash":"NIL",
+        "ModeCheque":"NIL",
+        "ModeDeposit":"NIL",
+        "RecievedOn":"NIL",
+        "RecievedBy":"NIL",
+        "MoneyRecieved":0
+    }
+}
    for(var i=0;i<a.length;i++){
-    database.ref("/users").child(a[i]).child("EMI").child('Oct-19').update({
-      "moneyRecieved":0
+    var mr=1;
+    if(i%2==0){
+      mr=0
+    }
+    database.ref("/users").child(a[i]).update({
+      "MoneyRecieved":mr
     })
 
    }

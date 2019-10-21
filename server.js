@@ -174,7 +174,7 @@ app.post('/newUser', (req,res) => {
        console.log(req.body)
        var EMI={}
     for(var i=1;i<=req.body["Term"];i++){
-        var month="Month "+i;
+        var month=""+i;
         EMI[month]={
             "AmountRecieved":"NIL",
             "ModeCash":"NIL",
@@ -341,9 +341,17 @@ app.post('/fireAshishIndivisual', (req,res) => {
   function gotData(data){
 //    var key=Object.keys(data.val())
 //    console.log(typeof(key))
-//    console.log(key)
+var i;
+var v=data.val()
+    //   for(i in v["EMI"]){
+    //       delete v["EMI"][i]
+    //   }
+      delete v["EMI"]
 try {
-    res.send(data)
+    
+    console.log(v)
+    res.send(v)
+    
     
 } catch (error) {
     console.log(error)

@@ -143,28 +143,11 @@ var numberCase;
           var normal=new Array()
           var count=1
           console.log(arr)   
-          var month = new Array();
-        month[0] = "Jan";
-        month[1] = "Feb";
-        month[2] = "Mar";
-        month[3] = "Apr";
-        month[4] = "May";
-        month[5] = "Jun";
-        month[6] = "Jul";
-        month[7] = "Aug";
-        month[8] = "Sep";
-        month[9] = "Oct";
-        month[10] = "Nov";
-        month[11] = "Dec";
+         
 
-        var d = new Date();
-        var n = month[d.getMonth()];  //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
-        var y= d.getFullYear().toString().slice(-2)
-        var dat=n+"-"+y
-        console.log(dat)
           for(var i=0;i<arr.length;i++){
-            console.log("a")
-            if(ab[arr[i]].EMI[`${dat}`]["moneyRecieved"]=='1'){
+            console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
+            if(ab[arr[i]].EMI[ab[arr[i]].CurrentMonth]["moneyRecieved"]=='1'){
               normal.push(`${arr[i]}`)
               
             }
