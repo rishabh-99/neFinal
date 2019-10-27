@@ -105,6 +105,8 @@ app.route('/login')
             }
             else{
                          req.session.user = username;
+                         req.session.lol="lol"
+                        
                 res.redirect('/dashboard');
 
             }
@@ -159,6 +161,13 @@ app.get('/display', (req, res) => {
         res.redirect('/login');
     }
 });
+app.get('/indivisual', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/indivisual.html');
+    } else {
+        res.redirect('/login');
+    }
+});
 
 app.post('/newUser', (req,res) => {
 
@@ -173,9 +182,8 @@ app.post('/newUser', (req,res) => {
        var nextEle=parseInt(a[l-1])+1;
        console.log(req.body)
        var EMI={}
-    for(var i=1;i<=req.body["Term"];i++){
-        var month=""+i;
-        EMI[month]={
+  
+        EMI["1"]={
             "AmountRecieved":"NIL",
             "ModeCash":"NIL",
             "ModeCheque":"NIL",
@@ -184,7 +192,7 @@ app.post('/newUser', (req,res) => {
             "RecievedBy":"NIL",
             "MoneyRecieved":0
         }
-    }
+    
     console.log(EMI)
         var ref=database.ref("/users")
         ref.child(nextEle).set({
@@ -200,7 +208,8 @@ app.post('/newUser', (req,res) => {
         "Total":"",
         "due":"",
         'loan':req.body["Loan"],
-        "CurrentMonth":"Month 1"
+        "currentMonth":1,
+        "moneyRecieved":0
     });
     
     var ref=database.ref("/users")
@@ -241,22 +250,27 @@ app.post('/newUser', (req,res) => {
   })
 
   app.post('/updateUser', (req,res) => {
+      console.log(req.body.data)
    if(req.body.data.pass!="secret"){
        res.send("Password Incorrect")
    }
    else{
-    var a=req.body.data.data;
-      
-     database2.ref("/users").child(a["CaseNo"]).set({
+    var a=req.body.data;
+      console.log(a)
+     database2.ref("/users").child(a["CaseNo"]).update({
         '1st Mnth':a["1st Mnth"],
-        'Balance as on':a["Balance as on"],
-        'CaseNo':a["CaseNo"],
-        'EMI':a["EMI"],
+        'Balance':a["Balance"],
+        'Cheque':a["Cheque"],
+        'EMII':a["EMII"],
         'Last Month':a["Last Month"],
         'Name':a["Name"],
         'Term':a["Term"],
-        'date':a["date"],
-        'loan':a["loan"]
+        'Date':a["Date"],
+        'Total':a["Total"],
+        'Due':a["Due"],
+        'loan':a["Loan"]
+      }).then(function(data){
+          console.log(data)
       })
       .catch(function (error) {
         console.log(error);
@@ -427,12 +441,7 @@ var jso={
 
 })
 
-app.post('/lastElement', (req,res) => {
-   
-//  console.log(a)
-    
-  
-  })
+
 
 
 // route for handling 404 requests(unavailable routes)

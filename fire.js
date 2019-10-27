@@ -28,22 +28,21 @@ function gotData(data){
    for(var i=1;i<=10;i++){
     var month=""+i;
     EMI[month]={
-        "AmountRecieved":"NIL",
-        "ModeCash":"NIL",
-        "ModeCheque":"NIL",
-        "ModeDeposit":"NIL",
-        "RecievedOn":"NIL",
-        "RecievedBy":"NIL",
-        "MoneyRecieved":0
-    }
+      "AmountRecieved":"NIL",
+      "ModeCash":"NIL",
+      "ModeCheque":"NIL",
+      "ModeDeposit":"NIL",
+      "RecievedOn":13,
+      "RecievedBy":"NIL",
+      "MoneyRecieved":0
+  }
+   
+   
 }
    for(var i=0;i<a.length;i++){
-    var mr=1;
-    if(i%2==0){
-      mr=0
-    }
-    database.ref("/users").child(a[i]).update({
-      "MoneyRecieved":mr
+     var kkk=(i+7)*1000
+     database.ref("/users").child(a[i]).update({
+      "loan":100000
     })
 
    }

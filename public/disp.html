@@ -4,105 +4,65 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+        <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./style.css">
+        <!-- <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" /> -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-          /* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  overflow: scroll;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; 
-}
-
-/* Modal Content */
-.modal-content {
-  background-color: #100e17;
-  margin: auto;
-  padding: 20px;
-  box-shadow: rgb(0,0,0);
-  width: 80%;
-  height: auto;
-  color: #ffffff;
-  margin-bottom: 10vh;
-}
-
-/* The Close Button */
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
-        </style>
+        <title>NE:Display Users</title>
 </head>
 <body>
+  <div class="sidebar">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+  -->
+    <div class="sidebar-wrapper">
+      <div class="logo">
+        <a href="javascript:void(0)" class="simple-text logo-mini">
+          NE
+        </a>
+        <a href="javascript:void(0)" class="simple-text logo-normal">
+         Dashboard
+        </a>
+      </div>
+      <ul class="nav">
+        <li>
+          <a href="/dashboard">
+            <i class="tim-icons icon-chart-pie-36"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="/newUser">
+            <i class="tim-icons icon-atom"></i>
+            <p>New User</p>
+          </a>
+        </li>
+        
+        <li class="active">
+          <a href="/display">
+            <i class="tim-icons icon-bell-55"></i>
+            <p>Display</p>
+          </a>
+        </li>
+        <li>
+            <a href="/logout">
+              <i class="tim-icons icon-pin"></i>
+              <p>Logout</p>
+            </a>
+          </li>
+       
+      </ul>
+    </div>
+  </div>
   <div class="container" id="cont">
     <div class="loaderCont">
         <div class="loader"></div>
 
       </div>
     </div>
-  <!-- The Modal -->
-<div id="myModal" class="modal">
 
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-     <div class="disdiv"> <label>First Month:</label></div><input class="inpModal" readonly id="FirstM"></label><br><br>
-      <div class="disdiv"><label>Balance:</label></div><input class="inpModal" readonly id="Balance"></input><br><br>
-      <div class="disdiv"><label>Cheque:</label></div><input class="inpModal" readonly id="Cheque"></input><br><br>
-      <div class="disdiv"><label>Date:</label></div><input class="inpModal" readonly id="Date"></input><br><br>
-      <div class="disdiv"><label>EMII:</label></div><input class="inpModal" readonly id="EMII"></input><br><br>
-      <div class="disdiv"><label>Last Month:</label></div><input class="inpModal" readonly id="LastM"></input><br><br>
-      <div class="disdiv"><label>Name:</label></div><input class="inpModal" readonly id="Name"></input><br><br>
-      <div class="disdiv"><label>Term:</label></div><input class="inpModal" readonly id="Term"></input><br><br>
-      <div class="disdiv"><label>Total:</label></div><input class="inpModal" readonly id="Total"></input><br><br>
-      <div class="disdiv"><label>Due:</label></div><input class="inpModal" readonly id="Due"></input><br><br>
-      <div class="disdiv"><label>Loan:</label></div><input class="inpModal" readonly id="Loan"></input><br><br>
 
-<button class="accordion">EMI</button>
-<div class="panel">
-    <button class="accordion">1st Month</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-    
-    <button class="accordion">2nd Month</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-    
-    <button class="accordion">3rd Month</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-    
-    <button class="accordion">3rd Month</button>
-    <div class="panel">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-</div>
-    </div>
-  
-  </div>
   
 </body>
 <script>
@@ -147,7 +107,7 @@ var numberCase;
 
           for(var i=0;i<arr.length;i++){
             console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
-            if(ab[arr[i]].EMI[ab[arr[i]].CurrentMonth]["moneyRecieved"]=='1'){
+            if(ab[arr[i]]["moneyRecieved"]=='1'){
               normal.push(`${arr[i]}`)
               
             }
@@ -243,37 +203,15 @@ var numberCase;
           }
         }
         function modaldisplay(cno){
-          modal.style.display = "block"
-          console.log(ab[cno])
-          container=document.getElementById("cont")
-          container.style.display="none"
-          document.getElementById("FirstM").value=ab[cno]["1st Mnth"]
-          document.getElementById("Balance").value=ab[cno]["Balance"]
-          document.getElementById("Cheque").value=ab[cno]["Cheque"]
-          document.getElementById("Date").value=ab[cno]["Date"]
-          document.getElementById("EMII").value=ab[cno]["EMII"]
-          document.getElementById("LastM").value=ab[cno]["Last Month"]
-          document.getElementById("Name").value=ab[cno]["Name"]
-          document.getElementById("Term").value=ab[cno]["Term"]
-          document.getElementById("Total").value=ab[cno]["Total"]
-          document.getElementById("Due").value=ab[cno]["due"]
-          document.getElementById("Loan").value=ab[cno]["loan"]
+         event.preventDefault()
+
+        sessionStorage.setItem("cno",cno)
+
+        location.href="/indivisual"
           
         }
-        var acc = document.getElementsByClassName("accordion");
-var i;
+        
 
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
-      panel.style.display = "none";
-    } else {
-      panel.style.display = "block";
-    }
-  });
-}
 
 </script>
 </html>

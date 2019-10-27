@@ -12,143 +12,177 @@
     <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/libs/css/style.css">
     <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
             body {
       font-family: "Poppins", sans-serif;
       height: 100vh;
+      color: #fff;
+      background-color: black;
+    }
+    .rowBody{
+          color: #ffffff;
+      background-color: #17141d;
+      width:100%;
+      height:450px;
+      margin-top:150px;
+      margin-left:100px;
+      border-radius: 50px;
+     
+    }
+    .headBody{
+        /* padding-left:20% ; */
+        /* padding-top: 15px; */
+        /* padding-bottom: 15px; */
+       
+        align-self: center;
+        padding-left: 40%;
+      height:55px;
+      padding-top:1%;
+      width:100%;
+      border-radius: 50px;;
+    }
+    .active{
+        background-color: #100e30;
     }
     
-    
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333;
-      position: -webkit-sticky; /* Safari */
-      position: sticky;
-      top: 0;
-    }
-    
-    li {
-      float: left;
-    }
-    
-    li a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    
-    li a:hover {
-      background-color: #111;
-    }
- z   
-    .active {
-      background-color: #4CAF50;
-    }
-    .right{
+    .bton{
         float: right;
     }
+    
         
         </style>
 </head>
 
 <body>
 
-        <ul class="topnav">
-                <li><a  href="/">Home</a></li>
-                <li><a class="active" href="/newUser">New User</a></li>  
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a  href="/display">Display Users</a></li>
-                <li class="right"><a href="/logout">Log Out</a></li>
-              </ul>
+    <div class="sidebar">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+          <div class="logo">
+            <a href="javascript:void(0)" class="simple-text logo-mini">
+              NE
+            </a>
+            <a href="javascript:void(0)" class="simple-text logo-normal">
+              New User
+            </a>
+          </div>
+          <ul class="nav">
+            <li>
+              <a href="/dashboard">
+                <i class="tim-icons icon-chart-pie-36"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+            <li class="active">
+              <a href="/newUser">
+                <i class="tim-icons icon-atom"></i>
+                <p>New User</p>
+              </a>
+            </li>
+            <li>
+              <a href="/display">
+                <i class="tim-icons icon-pin"></i>
+                <p>Display</p>
+              </a>
+            </li>
+            <li>
+                    <a href="/logout">
+                      <i class="tim-icons icon-pin"></i>
+                      <p>Logout</p>
+                    </a>
+                  </li>
+          </ul>
+        </div>
+      </div>
 
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- valifation types -->
+        <!-- ============================================================== -->
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card rowBody">
+                <h3 class="headBody">Create New User</h3>
+                <div class="card-body">
+                    <form id="validationform">
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label text-sm-right">1st Month</label>
+                            <div class="col-3">
+                                <input type="date" id="1st Month" required="" placeholder="Select Date" class="form-control">
+                            </div>
+                            <label class="col-1 col-form-label ">Balance As On</label>
+                            <div class="col-3 text-left">
+                                <input type="text" id="Balance As On" required="" placeholder="eg. 1000" class="form-control">
+                            </div>  
+                        </div>
+                        
+                      
 
-                    <div class="row">
-                        <!-- ============================================================== -->
-                        <!-- valifation types -->
-                        <!-- ============================================================== -->
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="card">
-                                <h5 class="card-header">Create New User</h5>
-                                <div class="card-body">
-                                    <form id="validationform">
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">1st Month</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="date" id="1st Month" required="" placeholder="Select Date" class="form-control">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="formpar-group row" id="BDiv">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Balance As On</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="Balance As On" required="" placeholder="eg. 1000" class="form-control">
-                                            </div>
-                                        </div>
+                       <div class="form-group row">
+                            <label class="col-3 col-form-label text-sm-right">EMI</label>
+                            <div class="col-3">
+                                <input type="text" id="EMI" required="" placeholder="Eg. 1000" class="form-control">
+                            </div>
+                            <label class="col-1 col-form-label">Last Month</label>
+                            <div class="col-3 text-left">
+                                <input type="date" id="Last Month" required="" placeholder="Type something" class="form-control">
+                            </div>
+                        </div>
 
-                                       <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">EMI</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="EMI" required="" placeholder="Eg. 1000" class="form-control">
-                                            </div>
-                                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label text-sm-right">Name</label>
+                            <div class="col-3">
+                                <input type="text" id="Name" required="" placeholder="Enter the Name of the User" class="form-control">
+                            </div>
+                            <label class="col-1 col-form-label">Term</label>
+                            <div class="col-3 text-left">
+                                <input type="text" id="Term" required="" placeholder="Enter the Term" class="form-control">
+                            </div>
+                        </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Last Month</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="date" id="Last Month" required="" placeholder="Type something" class="form-control">
-                                            </div>
-                                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label text-sm-right">Date</label>
+                            <div class="col-3">
+                                <input type="date" id="Date" required="" placeholder="Enter the starting date" class="form-control">
+                            </div>
+                            <label class="col-1 col-form-label">Loan</label>
+                            <div class="col-3 text-left">
+                                <input type="text" id="Loan" required="" placeholder="Enter the loan amount" class="form-control">
+                            </div>
+                        </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Name</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="Name" required="" placeholder="Enter the Name of the User" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Term</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="Term" required="" placeholder="Enter the Term" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Date</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="date" id="Date" required="" placeholder="Enter the starting date" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-12 col-sm-3 col-form-label text-sm-right">Loan</label>
-                                            <div class="col-12 col-sm-8 col-lg-6">
-                                                <input type="text" id="Loan" required="" placeholder="Enter the loan amount" class="form-control">
-                                            </div>
-                                        </div>
-                                      
-                                        <div class="form-group row text-right">
-                                            <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
-                                                <button onclick="create()" class="btn btn-space btn-primary">Submit</button>
-                                                
-                                            </div>                                      
-                                        </div>
-
-                                        
-
-
-
-                                        </div>
-                                    </form>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label text-sm-right"></label>
+                            <div class="col-3">
+                               
+                            </div>
+                            <label class="col-1 col-form-label"></label>
+                            <div class="col-3 text-left">
+                                <div class="bton">
+                                        <button onclick="create()" class="btn btn-space btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
+                      
+
+                        
+
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
                         <!-- ============================================================== -->
                         <!-- end valifation types -->
                         <!-- ============================================================== -->

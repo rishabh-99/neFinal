@@ -248,7 +248,7 @@ label {
     max-width: 100%;
     margin-bottom: 5px;
     font-size: 15px;
-    color: #71748d;
+    color: #ffffff;
 }
 
 .form-control {
@@ -257,7 +257,7 @@ label {
     font-size: 14px;
     line-height: 1.42857143;
     color: #71748d;
-    background-color: #fff;
+    background-color: transparent;
     background-image: none;
     border: 1px solid #d2d2e4;
     border-radius: 2px;
