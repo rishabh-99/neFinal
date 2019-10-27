@@ -380,7 +380,7 @@ var normal=[]
     var arr=Object.keys(ab)
 try {
     for(var i=0;i<arr.length;i++){
-        console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
+        // console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
         if(ab[arr[i]]["moneyRecieved"]=='1'){
           normal.push(`${arr[i]}`)
           
@@ -390,7 +390,8 @@ try {
         }
         
       }
-      res.send(defaulters)
+      var total=defaulters.concat(normal)
+      res.send(total)
     
 } catch (error) {
     console.log(error)
