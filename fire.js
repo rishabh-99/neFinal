@@ -40,9 +40,9 @@ function gotData(data){
    
 }
    for(var i=0;i<a.length;i++){
-     var kkk=(i+7)*1000
+     
      database.ref("/users").child(a[i]).update({
-      "loan":100000
+      "EMII":10000
     })
 
    }

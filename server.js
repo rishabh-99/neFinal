@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var morgan = require('morgan');
 var firebase = require("firebase/app");
+require("firebase/auth");
 require("firebase/database");
 const winston = require('winston');
 
@@ -94,23 +95,31 @@ app.route('/login')
         res.sendFile(__dirname + '/login.html');
     })
     .post((req, res) => {
-        var username = req.body.login[0],
-            password = req.body.login[1];
             console.log(req.body)
-            if(username!="alex@gmail.com"){
-                res.redirect('/login')
-            }
-            if(password!='secret'){
-                res.redirect('/login')
-            }
-            else{
-                         req.session.user = username;
-                         req.session.lol="lol"
+        // var username = req.body.email,
+        //     password = req.body.password;
+        //     console.log(req.body)
+        //     if(username!="alex@gmail.com"){
+        //         res.redirect('/login')
+        //     }
+        //     if(password!='secret'){
+        //         res.redirect('/login')
+        //     }
+        //     else{
+        //                  req.session.user = username;
                         
-                res.redirect('/dashboard');
+        //         res.redirect('/dashboard');
 
-            }
-
+        //     }
+        firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
+        .then(function(result) {
+            req.session.user=req.body.email
+          res.redirect('/dashboard')
+          console.log(result)
+        }).catch(function(error) {
+          res.redirect('/login')
+          console.log(error)
+        });
         // User.findOne({ where: { username: username } }).then(function (users) {
         //     console.log(users)
         //     if (!user) {
@@ -139,6 +148,12 @@ app.get('/dashboard', (req, res) => {
 app.get('/logout', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         res.clearCookie('user_sid');
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          
         res.redirect('/');
     } else {
         res.redirect('/login');
@@ -329,6 +344,53 @@ app.post('/fireAshish', (req,res) => {
 //    console.log(key)
 try {
     res.send(Object.keys(data.val()))
+    
+} catch (error) {
+    console.log(error)
+}
+  
+ 
+  
+  }
+    
+  
+  function errData(err){
+      console.log(err)
+  }
+})
+
+app.post('/fireAshishDefaulters', (req,res) => {
+    var a=[]
+    var resultS
+    var key
+    
+
+
+  var ref=database.ref("/users")
+  ref.on('value',gotData,errData)
+  
+  
+  function gotData(data){
+//    var key=Object.keys(data.val())
+//    console.log(typeof(key))
+//    console.log(key)
+var defaulters=[]
+var normal=[]
+    var ab=data.val()
+    var arr=Object.keys(ab)
+try {
+    for(var i=0;i<arr.length;i++){
+        console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
+        if(ab[arr[i]]["moneyRecieved"]=='1'){
+          normal.push(`${arr[i]}`)
+          
+        }
+        else{
+          defaulters.push(`${arr[i]}`)
+        }
+        
+      }
+      res.send(defaulters)
     
 } catch (error) {
     console.log(error)

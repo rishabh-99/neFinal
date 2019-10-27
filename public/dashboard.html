@@ -72,7 +72,7 @@
             NE
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
-            Analytics
+            Dashboard
           </a>
         </div>
         <ul class="nav">
@@ -108,6 +108,49 @@
      
       <!-- End Navbar -->
       <div class="content">
+        <!-- ======================================================================================================================== -->
+        <div class="row">
+         
+            <div class="col-lg-4">
+                    <div class="card card-chart">
+                      <div class="card-header">
+                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Week</h3>
+                        <h4 class="card-title" id="LatePerc"></h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="chart-area">
+                          <canvas id="PayPerChart"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      <div class="col-lg-4">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Month</h3>
+            <h4 class="card-title" id="EMICount"></h4>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <canvas id="EMIChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Mode of Paymeny</h3>
+                <h4 class="card-title" id="EMICount"> </h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="PayChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div> -->
+    </div>
        <!-- ========================================================================================================================= -->
         <div class="row">
          
@@ -176,48 +219,7 @@
             </div>
           </div>
         <!-- ================================================================================================================================-->
-        <div class="row">
-         
-          <div class="col-lg-4">
-                  <div class="card card-chart">
-                    <div class="card-header">
-                      <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Week</h3>
-                      <h4 class="card-title" id="LatePerc"></h4>
-                    </div>
-                    <div class="card-body">
-                      <div class="chart-area">
-                        <canvas id="PayPerChart"></canvas>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-    <div class="col-lg-4">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Month</h3>
-          <h4 class="card-title" id="EMICount"></h4>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="EMIChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="col-lg-4">
-          <div class="card card-chart">
-            <div class="card-header">
-              <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Mode of Paymeny</h3>
-              <h4 class="card-title" id="EMICount"> </h4>
-            </div>
-            <div class="card-body">
-              <div class="chart-area">
-                <canvas id="PayChart"></canvas>
-              </div>
-            </div>
-          </div>
-        </div> -->
-  </div>
+    
         <!-- ================================================================================================================================-->
         
         <div class="row">
@@ -521,17 +523,17 @@ console.log("AAAAAAAAAAAAAAAAAA "+real)
 // Global Options:
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.defaultFontSize = 16;
-var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+var gradientStroke = ctx.createLinearGradient(0, 0, 230, 50);
 var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
 
 gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+// gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+// gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
 
 
 gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
-gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
-gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
+// gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
+// gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
 
 var data = {
   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -539,10 +541,10 @@ var data = {
       label: "Expected Income",
       fill: false,
       lineTension: 0.1,
-      backgroundColor: gradientStroke,
-      borderColor: "blue", // The main line color
+      backgroundColor: "#93fcc2",
+      borderColor: "#93fcc2", // The main line color
       borderCapStyle: 'square',
-      borderDash: [5,15], // try [5, 15] for instance
+      borderDash: [], // try [5, 15] for instance
       borderDashOffset: 0.0,
       borderJoinStyle: 'miter',
       pointBorderColor: "black",
@@ -585,7 +587,12 @@ var data = {
 };
 
 // Notice the scaleLabel at the same level as Ticks
-var options = {
+var options = {legend: {
+            labels: {
+                fontColor: "white",
+                fontSize: 18
+            }
+        },
   maintainAspectRatio:false,
   scales: {
             yAxes: [{
