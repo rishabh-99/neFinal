@@ -444,63 +444,101 @@ try {
   }
 })
 app.post('/recieve', (req,res) => {
+    var alr=0
+    console.log(req.body)
+    firebase.auth().signInWithEmailAndPassword(req.body.username, req.body.password)
+        .then(function(result) {
+            database.ref("/users").child(req.body.cno).child("currentMonth").once('value')
+            .then(function(data){
+                var cm=data.val()
 
+                database.ref("/users").child(req.body.cno).child("EMI").child(data.val()).once('value')
+                .then(function(data){
+                    console.log(data.val())
+                  if(data.val()==null){
+                      
+                    function createEMI(){
+                        var mode=req.body.Rdata.Mode
+                        if(mode=="Cash"){
+                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                                "AmountRecieved": req.body.Rdata.AmountRecieved,
+                                "ModeCash": req.body.Rdata.Det,
+                                "ModeCheque": "NIL",
+                                "ModeDeposit":"NIL",
+                                "MoneyRecieved":1,
+                                "RecievedBy": req.body.Rdata.RecievedBy,
+                                "RecievedOn": req.body.Rdata.RecievedOn,
+                                "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
+                                "RecievedOnYear": req.body.Rdata.RecievedOnYear
+                            })
+                            .then(function(resu){
+                                res.send("Successful")
+                            })
+                            .catch(function(err){
+                                console.log(err)
+                            })
+        
+                        }
+                        else if(mode=="Cheque"){
+                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                                "AmountRecieved": req.body.Rdata.AmountRecieved,
+                                "ModeCash": "NIL",
+                                "ModeCheque": req.body.Rdata.Det,
+                                "ModeDeposit":"NIL",
+                                "MoneyRecieved":1,
+                                "RecievedBy": req.body.Rdata.RecievedBy,
+                                "RecievedOn": req.body.Rdata.RecievedOn,
+                                "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
+                                "RecievedOnYear": req.body.Rdata.RecievedOnYear
+                            })
+                            
+                            .then(function(resu){
+                                res.send("Successful")
+                            })
+                        }
+                        else if(mode=="Deposit"){
+                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                                "AmountRecieved": req.body.Rdata.AmountRecieved,
+                                "ModeCash": "NIL",
+                                "ModeCheque": "NIL",
+                                "ModeDeposit":req.body.Rdata.Det,
+                                "MoneyRecieved":1,
+                                "RecievedBy": req.body.Rdata.RecievedBy,
+                                "RecievedOn": req.body.Rdata.RecievedOn,
+                                "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
+                                "RecievedOnYear": req.body.Rdata.RecievedOnYear
+                            })
+                            
+                            .then(function(resu){
+                                res.send("Successful")
+                            })
+                        }
+                    }
+                        createEMI()
+                      
+                  }
+                  else{
+                      res.send("Already Recieved")
+                  }
+                })
+                .catch(function(err){
+                    console.log("AAAA"+err)
+                })
+
+
+               
+                
+            })
+           
+
+        }).catch(function(error) {
+          res.send("Password Incorrect")
+        });
 
     
 
-    console.log(req.body)
-   if(req.body.data.pass!="secret"){
-       res.send("Incorrect Password")
-   }
-   else{
-        var b= database.ref("/users").child(req.body.data.caseNo).update({
-      "moneyRecieved":1
-    })
-
-    let date_ob = new Date();
-
-// current date
-// adjust 0 before single digit date
-let date = ("0" + date_ob.getDate()).slice(-2);
-
-// current month
-let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-
-// current year
-let year = date_ob.getFullYear();
-
-// current hours
-let hours = date_ob.getHours();
-
-// current minutes
-let minutes = date_ob.getMinutes();
-
-// current seconds
-let seconds = date_ob.getSeconds();
-const logConfiguration = {
-    'transports': [
-        new winston.transports.File({
-            filename: `./logs/${year+"-"+month}.log`
-        })
-    ]
-};
-
-// Create the logger
-const logger = winston.createLogger(logConfiguration);
-
-// prints date & time in YYYY-MM-DD HH:MM:SS format
-var t=year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
-var jso={
-  "time":t,
-  "caseNo":req.body.data.caseNo,
-  "amount":req.body.data.amount,
-  "name":req.body.data.name
-}
-
-    logger.info(jso);
-  //   logger.info("bbbbbb")
-  res.send("Successful")
-   }
+   
+//   
 
 })
 

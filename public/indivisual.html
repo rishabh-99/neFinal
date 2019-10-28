@@ -34,6 +34,9 @@
 .blueCard[id="StartDate"]{
   color:blue
 }
+.white{
+  color: #ffffff;
+}
 .accordion {
   background-color: #100e17;
   color: #ffffff;
@@ -60,7 +63,7 @@
 </style>
 </head>
 
-<body bgcolor="black" class="">
+<body bgcolor="black" class="" id="c2">
   <div class="wrapper">
     <div class="sidebar">
       <!--
@@ -254,9 +257,10 @@
          <div class="form-group row"><div class="col-lg-6 col-md-12"><label>Total:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" readonly id="Total"></input></div></div>
          <div class="form-group row"><div class="col-lg-6 col-md-12"><label>Due:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" readonly id="Due"></input></div></div>
          <div class="form-group row"><div class="col-lg-6 col-md-12"><label>Loan:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" readonly id="Loan"></input></div></div>
-         <button class="btn btn-space btn-primary" id="recBtn" data-toggle="modal" data-target="#myModal2">Recieve</button>
+         <button class="btn btn-space btn-primary" id="recBtn" onclick="resetM()" data-toggle="modal" data-target="#myModal2">Recieve</button>
          <button class="btn btn-space btn-primary" onclick="forUpdate()" id="updBtn">Update</button>
          <button class="btn btn-space btn-primary hidBtn" id="hidBtn" data-toggle="modal" data-target="#myModal">Okay</button>
+         <button class="btn btn-space btn-primary" id="pdfBtn">Download PDF</button>
    
    
             </div>
@@ -277,7 +281,7 @@
           <h4 class="modal-title">Enter Password</h4>
         </div>
         <div class="modal-body row">
-          <div class="form-group row"><div class="col-lg-6 col-md-12"> <label>Amount Recieved:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" id="modalAmount"></div></div>
+          <input type="number" id="pass" class="form-control"></input>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-space btn-primary" data-dismiss="modal" onclick="updateOkay()">Submit</button>
@@ -296,312 +300,349 @@
           <h4 class="modal-title">Enter Details</h4>
         </div>
         <div class="modal-body row">
-          <input id="pass" class="form-control"></input>
+          <div class="form-group row"><div class="col-lg-6 col-md-12 white"> <label>Amount Recieved:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" id="modalAmount"></div></div>
+          <div class="form-group row"><div class="col-lg-6 col-md-12 white"> <label>Password:</label></div><div class="col-lg-6 col-md-12"><input type="password" class="form-control" id="modalPassword"></div></div>
+          
+          <div class="form-group row">
         </div>
+        <div class="checkbox" >
+            <input type="checkbox" id="modalCash" onclick='recieve("cash")'>
+            <label for="modalCash"><span>Cash</span></label>
+         </div>
+       
+         <div class="checkbox">
+            <input type="checkbox" id="modalCheque" onclick='recieve("cheque")' >
+            <label for="modalCheque"><span>Cheque</span></label>
+         </div>
+         <div class="checkbox">
+            <input type="checkbox" id="modalDeposit" onclick='recieve("deposit")' >
+            <label for="modalDeposit"><span>Deposit</span></label>
+         </div>
+         <div class="form-group row" id="chequeDiv"><div class="col-lg-6 col-md-12 white"> <label>Cheque No:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" id="modalCheNo"></div></div>
+         <div class="form-group row" id="depositDiv"><div class="col-lg-6 col-md-12 white"> <label>Reference No:</label></div><div class="col-lg-6 col-md-12"><input class="form-control" id="modalReNo"></div></div>
+        
+        </div>
+        
         <div class="modal-footer">
-          <button type="button" class="btn btn-space btn-primary" data-dismiss="modal" onclick="">Submit</button>
+          <button type="button" class="btn btn-space btn-primary" data-dismiss="modal" onclick="toRecieveData()">Submit</button>
         </div>
       </div>
       
     </div>
   </div>
  
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script>
-    $(document).ready(function() {
-      document.getElementById("hidBtn").style.display="none"
-      $().ready(function() {
-        $sidebar = $('.sidebar');
-        $navbar = $('.navbar');
-        $main_panel = $('.main-panel');
-
-        $full_page = $('.full-page');
-
-        $sidebar_responsive = $('body > .navbar-collapse');
-        sidebar_mini_active = true;
-        white_color = false;
-
-        window_width = $(window).width();
-
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+  
+ 
+</body>
+<!--   Core JS Files   -->
+<script src="../assets/js/core/jquery.min.js"></script>
+<script src="../assets/js/core/popper.min.js"></script>
+<script src="../assets/js/core/bootstrap.min.js"></script>
+<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="./html2canvas.js"></script>
+<!-- Chart JS -->
+<script src="../assets/js/plugins/chartjs.min.js"></script>
+<!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+<script>
+  $(document).ready(function() {
+    document.getElementById("hidBtn").style.display="none"
+    document.getElementById("chequeDiv").style.display="none"
+    document.getElementById("depositDiv").style.display="none"
+    document.getElementById("modalCash").checked==false
+    document.getElementById("modalCheque").checked==false
+    document.getElementById("modalDeposit").checked==false
 
 
 
-        $('.fixed-plugin a').click(function(event) {
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
+
+
+
+    $().ready(function() {
+      $sidebar = $('.sidebar');
+      $navbar = $('.navbar');
+      $main_panel = $('.main-panel');
+
+      $full_page = $('.full-page');
+
+      $sidebar_responsive = $('body > .navbar-collapse');
+      sidebar_mini_active = true;
+      white_color = false;
+
+      window_width = $(window).width();
+
+      fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+      $('.fixed-plugin a').click(function(event) {
+        if ($(this).hasClass('switch-trigger')) {
+          if (event.stopPropagation) {
+            event.stopPropagation();
+          } else if (window.event) {
+            window.event.cancelBubble = true;
           }
-        });
-
-        $('.fixed-plugin .background-color span').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data', new_color);
-          }
-
-          if ($main_panel.length != 0) {
-            $main_panel.attr('data', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data', new_color);
-          }
-        });
-
-        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            sidebar_mini_active = false;
-            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
-          } else {
-            $('body').addClass('sidebar-mini');
-            sidebar_mini_active = true;
-            blackDashboard.showSidebarMessage('Sidebar mini activated...');
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-        });
-
-        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (white_color == true) {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').removeClass('white-content');
-            }, 900);
-            white_color = false;
-          } else {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').addClass('white-content');
-            }, 900);
-
-            white_color = true;
-          }
-
-
-        });
-
-        $('.light-badge').click(function() {
-          $('body').addClass('white-content');
-        });
-
-        $('.dark-badge').click(function() {
-          $('body').removeClass('white-content');
-        });
+        }
       });
+
+      $('.fixed-plugin .background-color span').click(function() {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+
+        var new_color = $(this).data('color');
+
+        if ($sidebar.length != 0) {
+          $sidebar.attr('data', new_color);
+        }
+
+        if ($main_panel.length != 0) {
+          $main_panel.attr('data', new_color);
+        }
+
+        if ($full_page.length != 0) {
+          $full_page.attr('filter-color', new_color);
+        }
+
+        if ($sidebar_responsive.length != 0) {
+          $sidebar_responsive.attr('data', new_color);
+        }
+      });
+
+      $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+        var $btn = $(this);
+
+        if (sidebar_mini_active == true) {
+          $('body').removeClass('sidebar-mini');
+          sidebar_mini_active = false;
+          blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+        } else {
+          $('body').addClass('sidebar-mini');
+          sidebar_mini_active = true;
+          blackDashboard.showSidebarMessage('Sidebar mini activated...');
+        }
+
+        // we simulate the window Resize so the charts will get updated in realtime.
+        var simulateWindowResize = setInterval(function() {
+          window.dispatchEvent(new Event('resize'));
+        }, 180);
+
+        // we stop the simulation of Window Resize after the animations are completed
+        setTimeout(function() {
+          clearInterval(simulateWindowResize);
+        }, 1000);
+      });
+
+      $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+        var $btn = $(this);
+
+        if (white_color == true) {
+
+          $('body').addClass('change-background');
+          setTimeout(function() {
+            $('body').removeClass('change-background');
+            $('body').removeClass('white-content');
+          }, 900);
+          white_color = false;
+        } else {
+
+          $('body').addClass('change-background');
+          setTimeout(function() {
+            $('body').removeClass('change-background');
+            $('body').addClass('white-content');
+          }, 900);
+
+          white_color = true;
+        }
+
+
+      });
+
+      $('.light-badge').click(function() {
+        $('body').addClass('white-content');
+      });
+
+      $('.dark-badge').click(function() {
+        $('body').removeClass('white-content');
+      });
+    });
 
 //==================================================Firebase==================================================//
 
-    var firebaseConfig = {
-        apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
-        authDomain: "nefirebase-7624e.firebaseapp.com",
-        databaseURL: "https://nefirebase-7624e.firebaseio.com",
-        projectId: "nefirebase-7624e",
-        storageBucket: "",
-        messagingSenderId: "75788997805",
-        appId: "1:75788997805:web:cfa574138eef051c352224"
-        };
+  var firebaseConfig = {
+      apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
+      authDomain: "nefirebase-7624e.firebaseapp.com",
+      databaseURL: "https://nefirebase-7624e.firebaseio.com",
+      projectId: "nefirebase-7624e",
+      storageBucket: "",
+      messagingSenderId: "75788997805",
+      appId: "1:75788997805:web:cfa574138eef051c352224"
+      };
 // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        var cno=sessionStorage.getItem("cno")
-        var database=firebase.database()
-        var ref=database.ref("/users").child(cno)
-        ref.on('value',gotData,errData)
-        function gotData(response){
-            console.log(response.val())
-            var ab=response.val()
-  
+      firebase.initializeApp(firebaseConfig);
+      var cno=sessionStorage.getItem("cno")
+      var database=firebase.database()
+      var ref=database.ref("/users").child(cno)
+      ref.on('value',gotData,errData)
+      function gotData(response){
+          console.log(response.val())
+          var ab=response.val()
+
 //==========================================================================================================================//
 
 
 //================================================For Late Frequency Graph=================================================//
-    var ctx = document.getElementById("chartBig1").getContext('2d');
-    var chart_labels = Object.keys(ab["EMI"]);
-    var chart_data=[]
-    for(var i=0;i<chart_labels.length;i++){
-        if(ab["EMI"][chart_labels[i]]["RecievedOn"]<ab["Date"]){
-            chart_data.push(0)
-        }
-        else{
-            chart_data.push(ab["EMI"][chart_labels[i]]["RecievedOn"]-ab["Date"])
-        }
-    }
-
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientChartOptionsConfigurationWithTooltipPurple = {      //configuration of chart axises and line
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            beginAtZero: true,
-            stepSize:2,
-            max: 10,
-            padding: 2,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(225,78,202,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
+  var ctx = document.getElementById("chartBig1").getContext('2d');
+  var chart_labels = Object.keys(ab["EMI"]);
+  var chart_data=[]
+  for(var i=0;i<chart_labels.length;i++){
+      if(ab["EMI"][chart_labels[i]]["RecievedOn"]<ab["Date"]){
+          chart_data.push(0)
       }
-    };
+      else{
+          chart_data.push(ab["EMI"][chart_labels[i]]["RecievedOn"]-ab["Date"])
+      }
+  }
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-    var config = {
-      type: 'line',
-      data: {
-        labels: chart_labels,
-        datasets: [{
-          label: "No. of Days delayed by",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 8,
-          data: chart_data,
-        }]
-      },
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-    };
-    var myChartData = new Chart(ctx, config);
-   
+  var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+  gradientChartOptionsConfigurationWithTooltipPurple = {      //configuration of chart axises and line
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
+
+    tooltips: {
+      backgroundColor: '#f5f5f5',
+      titleFontColor: '#333',
+      bodyFontColor: '#666',
+      bodySpacing: 4,
+      xPadding: 12,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest"
+    },
+    responsive: true,
+    scales: {
+      yAxes: [{
+        barPercentage: 1,
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.0)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          beginAtZero: true,
+          stepSize:2,
+          max: 10,
+          padding: 2,
+          fontColor: "#9a9a9a"
+        }
+      }],
+
+      xAxes: [{
+        barPercentage: 1,
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(225,78,202,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          padding: 20,
+          fontColor: "#9a9a9a"
+        }
+      }]
+    }
+  };
+
+  gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+  gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+  gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+  var config = {
+    type: 'line',
+    data: {
+      labels: chart_labels,
+      datasets: [{
+        label: "No. of Days delayed by",
+        fill: true,
+        backgroundColor: gradientStroke,
+        borderColor: '#d346b1',
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        pointBackgroundColor: '#d346b1',
+        pointBorderColor: 'rgba(255,255,255,0)',
+        pointHoverBackgroundColor: '#d346b1',
+        pointBorderWidth: 20,
+        pointHoverRadius: 4,
+        pointHoverBorderWidth: 15,
+        pointRadius: 8,
+        data: chart_data,
+      }]
+    },
+    options: gradientChartOptionsConfigurationWithTooltipPurple
+  };
+  var myChartData = new Chart(ctx, config);
+ 
 //================================================For Late Frequency Graph=================================================//
 
 //================================================For Total EMI Graph======================================================//
- 
+
 var ctx = document.getElementById("EMIChart").getContext("2d");
 
 gradientDoughnutChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
 
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
+    tooltips: {
+      backgroundColor: '#f5f5f5',
+      titleFontColor: '#333',
+      bodyFontColor: '#666',
+      bodySpacing: 4,
+      xPadding: 12,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest"
+    },
+    responsive: true,
+    scales: {
+      yAxes: [{
 
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: 10,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          suggestedMin: 0,
+          suggestedMax: 10,
+          padding: 20,
+          fontColor: "#9e9e9e"
+        }
+      }],
 
-        xAxes: [{
+      xAxes: [{
 
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          padding: 20,
+          fontColor: "#9e9e9e"
+        }
+      }]
+    }
+  };
 
 var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
 
 gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-    // gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-    // gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+  // gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+  // gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
 
 gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
 // gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
@@ -613,26 +654,26 @@ var emiData=[ab["currentMonth"],(ab["Term"]-ab["currentMonth"])]
 
 
 var myChart = new Chart(ctx, {
-  type: 'doughnut',
-  responsive: true,
-  legend: {
-    display: false
-  },
-  data: {
-    labels: emiLabel,
-    datasets: [{
-      label: "EMI Details",
-      fill: true,
-      backgroundColor: [gradientStroke,gradientStroke2],
-      hoverBackgroundColor: [gradientStroke,gradientStroke2],
-      borderColor: ['#93fcc2','#ff0000'],
-      borderWidth: 2,
-      borderDash: [],
-      borderDashOffset: 0.0,
-      data: emiData,
-    }]
-  },
-  options: gradientDoughnutChartConfiguration
+type: 'doughnut',
+responsive: true,
+legend: {
+  display: false
+},
+data: {
+  labels: emiLabel,
+  datasets: [{
+    label: "EMI Details",
+    fill: true,
+    backgroundColor: [gradientStroke,gradientStroke2],
+    hoverBackgroundColor: [gradientStroke,gradientStroke2],
+    borderColor: ['#93fcc2','#ff0000'],
+    borderWidth: 2,
+    borderDash: [],
+    borderDashOffset: 0.0,
+    data: emiData,
+  }]
+},
+options: gradientDoughnutChartConfiguration
 });
 document.getElementById("EMICount").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i>Total EMI ${ab["Term"]}`
 //=========================================================================================================================//
@@ -641,98 +682,98 @@ document.getElementById("EMICount").innerHTML=`<i class="tim-icons icon-delivery
 var ctx = document.getElementById("PayPerChart").getContext("2d");
 
 gradientLatePerChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
 
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
+    tooltips: {
+      backgroundColor: '#f5f5f5',
+      titleFontColor: '#333',
+      bodyFontColor: '#666',
+      bodySpacing: 4,
+      xPadding: 12,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest"
+    },
+    responsive: true,
+    scales: {
+      yAxes: [{
 
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            min: 0,
-            max: 100,
-            stepSize:10,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          min: 0,
+          max: 100,
+          stepSize:10,
+          padding: 20,
+          fontColor: "#9e9e9e"
+        }
+      }],
 
-        xAxes: [{
+      xAxes: [{
 
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          padding: 20,
+          fontColor: "#9e9e9e"
+        }
+      }]
+    }
+  };
 
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+  var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-    gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+  gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
+  gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+  gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
 
-    gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
+  gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
 gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
 gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
-    
-    var lateCounter=0;
-    var emDe=Object.keys(ab["EMI"])
-    for(var i=0;i<emDe.length;i++){
-        if(ab["EMI"][emDe[i]]["RecievedOn"]>ab["Date"])
-        {
-            lateCounter++;
-        }
-    }
-    var per=(lateCounter/emDe.length)*100
-    var payData=[per.toFixed(0),100-per.toFixed(0)]
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ["Late","On Time"],
-        datasets: [{
-          label: "Countries",
-          fill: true,
-          backgroundColor: [gradientStroke2,gradientStroke],
-          hoverBackgroundColor: [gradientStroke2,gradientStroke],
-          borderColor: ['#ff0000','#93fcc2'],
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data:payData ,
-        }]
-      },
-      options: gradientLatePerChartConfiguration
-    });
+  
+  var lateCounter=0;
+  var emDe=Object.keys(ab["EMI"])
+  for(var i=0;i<emDe.length;i++){
+      if(ab["EMI"][emDe[i]]["RecievedOn"]>ab["Date"])
+      {
+          lateCounter++;
+      }
+  }
+  var per=(lateCounter/emDe.length)*100
+  var payData=[per.toFixed(0),100-per.toFixed(0)]
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    responsive: true,
+    legend: {
+      display: false
+    },
+    data: {
+      labels: ["Late","On Time"],
+      datasets: [{
+        label: "Countries",
+        fill: true,
+        backgroundColor: [gradientStroke2,gradientStroke],
+        hoverBackgroundColor: [gradientStroke2,gradientStroke],
+        borderColor: ['#ff0000','#93fcc2'],
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        data:payData ,
+      }]
+    },
+    options: gradientLatePerChartConfiguration
+  });
 var per=(lateCounter/emDe.length)*100
-    document.getElementById("LatePerc").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i>Late Percentage ${per.toFixed(0)}%`
+  document.getElementById("LatePerc").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i>Late Percentage ${per.toFixed(0)}%`
 //=========================================================================================================================//
 
 //=================================================Mode of Payment Chart===================================================//
@@ -740,129 +781,129 @@ var per=(lateCounter/emDe.length)*100
 var ctx = document.getElementById("PayChart").getContext("2d");
 
 gradientPayChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
+    maintainAspectRatio: false,
+    legend: {
+      display: false
+    },
 
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
+    tooltips: {
+      backgroundColor: '#f5f5f5',
+      titleFontColor: '#333',
+      bodyFontColor: '#666',
+      bodySpacing: 4,
+      xPadding: 12,
+      mode: "nearest",
+      intersect: 0,
+      position: "nearest"
+    },
+    responsive: true,
+    scales: {
+      yAxes: [{
 
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 0,
-            max: ab["currentMonth"],
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
-
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
-    gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
-
-    var cash=0
-    var cheq=0
-    var bankD=0
-    var a=Object.keys(ab["EMI"])
-    for(var i=0;i<a.length;i++){
-        if(ab["EMI"][a[i]]["ModeCash"]!='NIL'){
-            cash++;
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          suggestedMin: 0,
+          max: ab["currentMonth"],
+          padding: 20,
+          fontColor: "#9e9e9e"
         }
-        else if(ab["EMI"][a[i]]["ModeCheque"]!='NIL'){
-            cheq++;
+      }],
+
+      xAxes: [{
+
+        gridLines: {
+          drawBorder: false,
+          color: 'rgba(29,140,248,0.1)',
+          zeroLineColor: "transparent",
+        },
+        ticks: {
+          padding: 20,
+          fontColor: "#9e9e9e"
         }
-        else{
-            bankD++
-        }
+      }]
     }
+  };
 
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ["Cash","Cheque","Bank Deposit"],
-        datasets: [{
-          label: "Modes of Payment",
-          fill: true,
-          backgroundColor: gradientStroke,
-          hoverBackgroundColor: gradientStroke,
-          borderColor: '#1f8ef1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data: [cash,cheq,bankD],
-        }]
-      },
-      options: gradientPayChartConfiguration
-    });
+  var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+  gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+  gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+  gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+  var cash=0
+  var cheq=0
+  var bankD=0
+  var a=Object.keys(ab["EMI"])
+  for(var i=0;i<a.length;i++){
+      if(ab["EMI"][a[i]]["ModeCash"]!='NIL'){
+          cash++;
+      }
+      else if(ab["EMI"][a[i]]["ModeCheque"]!='NIL'){
+          cheq++;
+      }
+      else{
+          bankD++
+      }
+  }
+
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    responsive: true,
+    legend: {
+      display: false
+    },
+    data: {
+      labels: ["Cash","Cheque","Bank Deposit"],
+      datasets: [{
+        label: "Modes of Payment",
+        fill: true,
+        backgroundColor: gradientStroke,
+        hoverBackgroundColor: gradientStroke,
+        borderColor: '#1f8ef1',
+        borderWidth: 2,
+        borderDash: [],
+        borderDashOffset: 0.0,
+        data: [cash,cheq,bankD],
+      }]
+    },
+    options: gradientPayChartConfiguration
+  });
 
 //=========================================================================================================================//
 document.getElementById("StartDate").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> <b>${ab["1st Mnth"]}<b>`
 var emida=Object.keys(ab["EMI"])
 var sum=0
 for(var i=0;i<emida.length;i++){
-      sum+=ab["EMI"][emida[i]]["AmountRecieved"]
+    sum+=ab["EMI"][emida[i]]["AmountRecieved"]
 }
 document.getElementById("AmountRecieved").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> ${sum}`
 var calc=(ab["currentMonth"]*ab["EMII"])-sum
 document.getElementById("Difference").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> ${calc}`
 if(calc<0){
-  document.getElementById("Difference").classList.toggle("redCard")
+document.getElementById("Difference").classList.toggle("redCard")
 }
 else{
-  document.getElementById("Difference").classList.toggle("greenCard")
+document.getElementById("Difference").classList.toggle("greenCard")
 }
 var tdata=""
 for(var i=0;i<emida.length;i++){
-  var mode=""
-  if(ab["EMI"][emida[i]]["ModeCash"]!="NIL"){
-    mode="Cash"
-  }
-  else if(ab["EMI"][emida[i]]["ModeCheque"]!="NIL"){
-    mode="Cheque "+ab["EMI"][emida[i]]["ModeCheque"]
-  }
-  else if(ab["EMI"][emida[i]]["ModeDeposit"]!="NIL"){
-    mode="Deposit "+ab["EMI"][emida[i]]["ModeDeposit"]
+var mode=""
+if(ab["EMI"][emida[i]]["ModeCash"]!="NIL"){
+  mode="Cash"
+}
+else if(ab["EMI"][emida[i]]["ModeCheque"]!="NIL"){
+  mode="Cheque "+ab["EMI"][emida[i]]["ModeCheque"]
+}
+else if(ab["EMI"][emida[i]]["ModeDeposit"]!="NIL"){
+  mode="Deposit "+ab["EMI"][emida[i]]["ModeDeposit"]
 1  }
-  tdata=tdata.concat("<tr>")
-    tdata=tdata.concat(`<td>${ab["EMI"][emida[i]]["AmountRecieved"]}</td><td>${mode}</td><td>${ab["EMI"][emida[i]]["RecievedBy"]}</td><td>${ab["EMI"][emida[i]]["RecievedOn"]}</td>`)
-  tdata=tdata.concat("</tr>")
+tdata=tdata.concat("<tr>")
+  tdata=tdata.concat(`<td>${ab["EMI"][emida[i]]["AmountRecieved"]}</td><td>${mode}</td><td>${ab["EMI"][emida[i]]["RecievedBy"]}</td><td>${ab["EMI"][emida[i]]["RecievedOn"]}</td>`)
+tdata=tdata.concat("</tr>")
 }
 document.getElementById('tbody').innerHTML=tdata
 
@@ -893,106 +934,246 @@ document.getElementById('tbody').innerHTML=tdata
 //     }
 //   });
 // }
-  document.getElementById("FirstM").value=ab["1st Mnth"]
-  document.getElementById("Balance").value=ab["Balance"]
-  document.getElementById("Cheque").value=ab["Cheque"]
-  document.getElementById("Date").value=ab["Date"]
-  document.getElementById("EMII").value=ab["EMII"]
-  document.getElementById("LastM").value=ab["Last Month"]
-  document.getElementById("Name").value=ab["Name"]
-  document.getElementById("Term").value=ab["Term"]
-  document.getElementById("Total").value=ab["Total"]
-  document.getElementById("Due").value=ab["due"]
-  document.getElementById("Loan").value=ab["loan"]
+document.getElementById("FirstM").value=ab["1st Mnth"]
+document.getElementById("Balance").value=ab["Balance"]
+document.getElementById("Cheque").value=ab["Cheque"]
+document.getElementById("Date").value=ab["Date"]
+document.getElementById("EMII").value=ab["EMII"]
+document.getElementById("LastM").value=ab["Last Month"]
+document.getElementById("Name").value=ab["Name"]
+document.getElementById("Term").value=ab["Term"]
+document.getElementById("Total").value=ab["Total"]
+document.getElementById("Due").value=ab["due"]
+document.getElementById("Loan").value=ab["loan"]
 
 
 
 
-        }
+      }
 
 
-        function errData(err){
-          console.log(err)
-        }
-    });
+      function errData(err){
+        console.log(err)
+      }
+  });
 
-    function forUpdate(){
+  function forUpdate(){
 
-  document.getElementById("recBtn").style.display="none"
-  document.getElementById("hidBtn").style.display="inline-block"
-  document.getElementById("updBtn").style.display="none"
-  document.getElementById("FirstM").readOnly=false
-  document.getElementById("Balance").readOnly=false
-  document.getElementById("Cheque").readOnly=false
-  document.getElementById("Date").readOnly=false
-  document.getElementById("EMII").readOnly=false
-  document.getElementById("LastM").readOnly=false
-  document.getElementById("Name").readOnly=false
-  document.getElementById("Term").readOnly=false
-  document.getElementById("Total").readOnly=false
-  document.getElementById("Due").readOnly=false
-  document.getElementById("Loan").readOnly=false
+document.getElementById("recBtn").style.display="none"
+document.getElementById("hidBtn").style.display="inline-block"
+document.getElementById("updBtn").style.display="none"
+document.getElementById("pdfBtn").style.display="none"
+document.getElementById("FirstM").readOnly=false
+document.getElementById("Balance").readOnly=false
+document.getElementById("Cheque").readOnly=false
+document.getElementById("Date").readOnly=false
+document.getElementById("EMII").readOnly=false
+document.getElementById("LastM").readOnly=false
+document.getElementById("Name").readOnly=false
+document.getElementById("Term").readOnly=false
+document.getElementById("Total").readOnly=false
+document.getElementById("Due").readOnly=false
+document.getElementById("Loan").readOnly=false
 }
 function restore(){
-  document.getElementById("recBtn").style.display="inline-block"
-  document.getElementById("hidBtn").style.display="none"
-  document.getElementById("updBtn").style.display="inline-block"
+document.getElementById("recBtn").style.display="inline-block"
+document.getElementById("hidBtn").style.display="none"
+document.getElementById("updBtn").style.display="inline-block"
+document.getElementById("pdfBtn").style.display=""
 }
 function updateOkay(){
-  document.getElementById("recBtn").style.display="inline-block"
-  document.getElementById("hidBtn").style.display="none"
-  document.getElementById("updBtn").style.display="inline-block"
-  document.getElementById("FirstM").readOnly=true
-  document.getElementById("Balance").readOnly=true
-  document.getElementById("Cheque").readOnly=true
-  document.getElementById("Date").readOnly=true
-  document.getElementById("EMII").readOnly=true
-  document.getElementById("LastM").readOnly=true
-  document.getElementById("Name").readOnly=true
-  document.getElementById("Term").readOnly=true
-  document.getElementById("Total").readOnly=true
-  document.getElementById("Due").readOnly=true
-  document.getElementById("Loan").readOnly=true
+document.getElementById("recBtn").style.display="inline-block"
+document.getElementById("hidBtn").style.display="none"
+document.getElementById("updBtn").style.display="inline-block"
+document.getElementById("pdfBtn").style.display=""
+document.getElementById("FirstM").readOnly=true
+document.getElementById("Balance").readOnly=true
+document.getElementById("Cheque").readOnly=true
+document.getElementById("Date").readOnly=true
+document.getElementById("EMII").readOnly=true
+document.getElementById("LastM").readOnly=true
+document.getElementById("Name").readOnly=true
+document.getElementById("Term").readOnly=true
+document.getElementById("Total").readOnly=true
+document.getElementById("Due").readOnly=true
+document.getElementById("Loan").readOnly=true
 
-  var p=document.getElementById("pass").value
-  console.log("AAAAAAAAAA")
-  var data={
-                            "pass":p,
-                           "1st Mnth":document.getElementById("FirstM").value,
-                           "Balance":document.getElementById("Balance").value,
-                           "Cheque":document.getElementById("Cheque").value,
-                           "Date":document.getElementById("Date").value,
-                           "EMII":document.getElementById("EMII").value,
-                           "Last Month":document.getElementById("LastM").value,
-                           "Name":document.getElementById("Name").value,
-                           "Term":document.getElementById("Term").value,
-                           "Total":document.getElementById("Total").value,
-                           "Due":document.getElementById("Due").value,
-                           "Loan":document.getElementById("Loan").value,
-                           "CaseNo":sessionStorage.getItem("cno")
-  }
-  axios.post('/updateUser', {
-                           data
-                    
-                    }).then(function(data){
-                      alert(data.data)
-                      console.log(data.data)
-                    })
+var p=document.getElementById("pass").value
+console.log("AAAAAAAAAA")
+var data={
+                          "pass":p,
+                         "1st Mnth":document.getElementById("FirstM").value,
+                         "Balance":document.getElementById("Balance").value,
+                         "Cheque":document.getElementById("Cheque").value,
+                         "Date":document.getElementById("Date").value,
+                         "EMII":document.getElementById("EMII").value,
+                         "Last Month":document.getElementById("LastM").value,
+                         "Name":document.getElementById("Name").value,
+                         "Term":document.getElementById("Term").value,
+                         "Total":document.getElementById("Total").value,
+                         "Due":document.getElementById("Due").value,
+                         "Loan":document.getElementById("Loan").value,
+                         "CaseNo":sessionStorage.getItem("cno")
+}
+axios.post('/updateUser', {
+                         data
+                  
+                  }).then(function(data){
+                    alert(data.data)
+                    console.log(data.data)
+                  })
+
+}
+var mode
+function recieve(data){
+var chequeDiv=document.getElementById("chequeDiv")
+var depositDiv=document.getElementById("depositDiv")
+var modalCash=document.getElementById("modalCash")
+var modalCheque=document.getElementById("modalCheque")
+var modalDeposit=document.getElementById("modalDeposit")
+if(data=='cheque'){
+  chequeDiv.style.display=""
+  depositDiv.style.display="none"
+  modalCash.checked=false
+  modalDeposit.checked=false
+  mode="Cheque"
   
+
+}
+else if(data=='deposit'){
+  depositDiv.style.display=""
+  chequeDiv.style.display="none"
+
+  modalCash.checked=false
+  modalCheque.checked=false
+  mode="Deposit"
+}
+else if(data=='cash'){
+  depositDiv.style.display="none"
+  chequeDiv.style.display="none"
+
+  modalDeposit.checked=false
+  modalCheque.checked=false
+  mode="Cash"
+}
+}
+var Rdata={}
+
+function toRecieveData(){
+var date=new Date()
+var day=date.getDate()
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+var amount=document.getElementById("modalAmount").value
+  if(mode=="Cash"){
+   
+    Rdata={
+      "AmountRecieved":Number(document.getElementById("modalAmount").value),
+      "Mode":"Cash",
+      "Det":document.getElementById("modalAmount").value,
+      "RecievedBy":sessionStorage.getItem("Name"),
+      "RecievedOn":day,
+      "RecievedOnMonth":monthNames[date.getMonth()],
+      "RecievedOnYear":date.getFullYear()
+
+    }
+  }
+  else if(mode=="Cheque"){
+    Rdata={
+      "AmountRecieved":Number(document.getElementById("modalAmount").value),
+      "Mode":"Cheque",
+      "Det":document.getElementById("modalCheNo").value,
+      "RecievedBy":sessionStorage.getItem("Name"),
+      "RecievedOn":day,
+      "RecievedOnMonth":monthNames[date.getMonth()],
+      "RecievedOnYear":date.getFullYear()
+
+    }
+  }
+  else if(mode=="Deposit"){
+    Rdata={
+      "AmountRecieved":Number(document.getElementById("modalAmount").value),
+      "Mode":"Cheque",
+      "Det":document.getElementById("modalReNo").value,
+      "RecievedBy":sessionStorage.getItem("Name"),
+      "RecievedOn":day,
+      "RecievedOnMonth":monthNames[date.getMonth()],
+      "RecievedOnYear":date.getFullYear()
+
+    }
+  }
+  var modalCash=document.getElementById("modalCash")
+var modalCheque=document.getElementById("modalCheque")
+var modalDeposit=document.getElementById("modalDeposit")
+if(modalCash.checked==false&&modalCheque.checked==false&&modalDeposit.checked==false){
+  alert("Kindly choose a Mode of Payment")
+}
+else{
+  console.log(Rdata)
+  axios.post('/recieve', {
+                         Rdata,
+                         "password":document.getElementById("modalPassword").value,
+                         "username":sessionStorage.getItem("Name"),
+                         "cno":sessionStorage.getItem("cno")
+                         
+                  
+                  }).then(function(res){
+                    alert(res.data)
+                  
+                })
+}
+  
+}
+function resetM(){
+var modalCash=document.getElementById("modalCash")
+var modalCheque=document.getElementById("modalCheque")
+var modalDeposit=document.getElementById("modalDeposit")
+modalCash.checked=false
+modalCheque.checked=false
+modalDeposit.checked=false
+document.getElementById("modalPassword").value=""
+document.getElementById("modalAmount").value=""
+
 }
 
 
-        
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-     demo.initDashboardPageCharts();
 
-    });
 
-  </script>
+      
+</script>
+<script>
+  $(document).ready(function() {
+   
+   $("#pdfBtn").click(function(){
+    
+      // html2canvas(document.body,{
+        // onrendered: function(canvas){
+        //   var img=canvas.toDataURL("image/png")
+        //   var doc= new jsPDF()
+
+        //   doc.addImage(img,'JPEG',20,20)
+        //   doc.save("bb.pdf")
+      //   }
+      // })
+
+
+html2canvas(document.querySelector("#c2")).then(canvas => {
  
-</body>
+          var img=canvas.toDataURL("image/png")
+          // var doc= new jsPDF()
+          var doc = new jsPDF("p", "mm", "a4");
+
+var width = doc.internal.pageSize.getWidth();
+var height = doc.internal.pageSize.getHeight();
+          doc.addImage(img,'JPEG',0,0,width,height)
+          doc.save(`NEcaseNo${sessionStorage.getItem('cno')}.pdf`)
+  
+});
+
+
+  });
+  })
+</script>
 
 </html>
