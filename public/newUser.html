@@ -215,6 +215,7 @@
                 function create(){
                    if(document.getElementById("Balance As On").value!=""&&document.getElementById("1st Month").value!=""&&document.getElementById("EMI").value!=""&&document.getElementById("Last Month").value!=""&&document.getElementById("Name").value!=""&&document.getElementById("Term").value!=""&&document.getElementById("Date").value!=""&&document.getElementById("Loan").value!=""){
                        event.preventDefault()
+                       //Change here for new user, instead of /newUser write the api like...do remove the / in the string
 
                        axios.post('/newUser', {
                            "Balance":document.getElementById("Balance As On").value,

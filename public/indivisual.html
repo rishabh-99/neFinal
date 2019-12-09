@@ -468,25 +468,17 @@
 
 //==================================================Firebase==================================================//
 
-  var firebaseConfig = {
-      apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
-      authDomain: "nefirebase-7624e.firebaseapp.com",
-      databaseURL: "https://nefirebase-7624e.firebaseio.com",
-      projectId: "nefirebase-7624e",
-      storageBucket: "",
-      messagingSenderId: "75788997805",
-      appId: "1:75788997805:web:cfa574138eef051c352224"
-      };
-// Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      var cno=sessionStorage.getItem("cno")
-      var database=firebase.database()
-      var ref=database.ref("/users").child(cno)
-      ref.on('value',gotData,errData)
-      function gotData(response){
-          console.log(response.val())
-          var ab=response.val()
-
+ 
+  
+        var cno=sessionStorage.getItem("cno")
+      
+        axios.get('http://821c1c7a.ngrok.io/')
+          .then(function (response) {
+            console.log(response.data['1']);
+            
+            var ab = response.data['1']
+            console.log(Object.keys(ab['EMI']));
+            // var ab=a[0]
 //==========================================================================================================================//
 
 
@@ -949,12 +941,8 @@ document.getElementById("Loan").value=ab["loan"]
 
 
 
-      }
-
-
-      function errData(err){
-        console.log(err)
-      }
+})
+         
   });
 
   function forUpdate(){
@@ -1111,6 +1099,7 @@ if(modalCash.checked==false&&modalCheque.checked==false&&modalDeposit.checked==f
 }
 else{
   console.log(Rdata)
+  //change here for recieve button, instead of /recieve write the API link...do remove the / in the string
   axios.post('/recieve', {
                          Rdata,
                          "password":document.getElementById("modalPassword").value,

@@ -9,6 +9,8 @@ require("firebase/database");
 const winston = require('winston');
 
 
+var cors = require('cors');
+
 
 
 
@@ -17,7 +19,7 @@ var app = express();
 
 // set our application port
 app.set('port', 9000);
-
+app.use(cors());
 // set morgan to log info about our requests for development use.
 app.use(morgan('dev'));
 
@@ -96,30 +98,30 @@ app.route('/login')
     })
     .post((req, res) => {
             console.log(req.body)
-        // var username = req.body.email,
-        //     password = req.body.password;
-        //     console.log(req.body)
-        //     if(username!="alex@gmail.com"){
-        //         res.redirect('/login')
-        //     }
-        //     if(password!='secret'){
-        //         res.redirect('/login')
-        //     }
-        //     else{
-        //                  req.session.user = username;
+        var username = req.body.email,
+            password = req.body.password;
+            console.log(req.body)
+            if(username!="alex@gmail.com"){
+                res.redirect('/login')
+            }
+            if(password!='secret'){
+                res.redirect('/login')
+            }
+            else{
+                         req.session.user = username;
                         
-        //         res.redirect('/dashboard');
+                res.redirect('/dashboard');
 
-        //     }
-        firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
-        .then(function(result) {
-            req.session.user=req.body.email
-          res.redirect('/dashboard')
-          console.log(result)
-        }).catch(function(error) {
-          res.redirect('/login')
-          console.log(error)
-        });
+            }
+        // firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
+        // .then(function(result) {
+        //     req.session.user=req.body.email
+        //   res.redirect('/dashboard')
+        //   console.log(result)
+        // }).catch(function(error) {
+        //   res.redirect('/login')
+        //   console.log(error)
+        // });
         // User.findOne({ where: { username: username } }).then(function (users) {
         //     console.log(users)
         //     if (!user) {
@@ -444,23 +446,13 @@ try {
   }
 })
 app.post('/recieve', (req,res) => {
-    var alr=0
-    console.log(req.body)
-    firebase.auth().signInWithEmailAndPassword(req.body.username, req.body.password)
-        .then(function(result) {
-            database.ref("/users").child(req.body.cno).child("currentMonth").once('value')
-            .then(function(data){
-                var cm=data.val()
-
-                database.ref("/users").child(req.body.cno).child("EMI").child(data.val()).once('value')
-                .then(function(data){
-                    console.log(data.val())
-                  if(data.val()==null){
+        var dataEMI={};
+                  if(req.body.username=='alex@gmail.com'&&req.body.password=='secret'){
                       
                     function createEMI(){
                         var mode=req.body.Rdata.Mode
                         if(mode=="Cash"){
-                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                            dataEMI={
                                 "AmountRecieved": req.body.Rdata.AmountRecieved,
                                 "ModeCash": req.body.Rdata.Det,
                                 "ModeCheque": "NIL",
@@ -470,17 +462,12 @@ app.post('/recieve', (req,res) => {
                                 "RecievedOn": req.body.Rdata.RecievedOn,
                                 "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
                                 "RecievedOnYear": req.body.Rdata.RecievedOnYear
-                            })
-                            .then(function(resu){
-                                res.send("Successful")
-                            })
-                            .catch(function(err){
-                                console.log(err)
-                            })
+                            }
+                          
         
                         }
                         else if(mode=="Cheque"){
-                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                            dataEMI={
                                 "AmountRecieved": req.body.Rdata.AmountRecieved,
                                 "ModeCash": "NIL",
                                 "ModeCheque": req.body.Rdata.Det,
@@ -490,14 +477,11 @@ app.post('/recieve', (req,res) => {
                                 "RecievedOn": req.body.Rdata.RecievedOn,
                                 "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
                                 "RecievedOnYear": req.body.Rdata.RecievedOnYear
-                            })
-                            
-                            .then(function(resu){
-                                res.send("Successful")
-                            })
+                            }
+                          
                         }
                         else if(mode=="Deposit"){
-                            database2.ref("/users").child(req.body.cno).child("EMI").child(cm).update({
+                            dataEMI={
                                 "AmountRecieved": req.body.Rdata.AmountRecieved,
                                 "ModeCash": "NIL",
                                 "ModeCheque": "NIL",
@@ -507,33 +491,23 @@ app.post('/recieve', (req,res) => {
                                 "RecievedOn": req.body.Rdata.RecievedOn,
                                 "RecievedOnMonth": req.body.Rdata.RecievedOnMonth,
                                 "RecievedOnYear": req.body.Rdata.RecievedOnYear
-                            })
+                            }
                             
-                            .then(function(resu){
-                                res.send("Successful")
-                            })
+                            
                         }
+                        
                     }
                         createEMI()
                       
                   }
                   else{
-                      res.send("Already Recieved")
+                      res.send("Incorrect Password")
                   }
-                })
-                .catch(function(err){
-                    console.log("AAAA"+err)
-                })
+              
 
 
                
-                
-            })
-           
-
-        }).catch(function(error) {
-          res.send("Password Incorrect")
-        });
+         
 
     
 

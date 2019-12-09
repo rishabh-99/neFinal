@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,7 @@
   <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        
+
   <title>
     NE:Dashboard
   </title>
@@ -21,43 +20,48 @@
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-<style>
-.greenCard[id="Difference"]{
-  color: green;
-}
-.redCard[id="Difference"]{
-  color:red;
-}
-.blueCard[id="AmountRecieved"]{
-  color:linear-gradient(rgb(29,140,248))
-}
-.blueCard[id="StartDate"]{
-  color:blue
-}
-.accordion {
-  background-color: #100e17;
-  color: #ffffff;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-}
+  <style>
+    .greenCard[id="Difference"] {
+      color: green;
+    }
 
-.active, .accordion:hover {
-  background-color: #100e30; 
-}
+    .redCard[id="Difference"] {
+      color: red;
+    }
 
-.panel {
-  padding: 0 18px;
-  display: none;
-  background-color: #100e17;
-  overflow: hidden;
-}
-</style>
+    .blueCard[id="AmountRecieved"] {
+      color: linear-gradient(rgb(29, 140, 248))
+    }
+
+    .blueCard[id="StartDate"] {
+      color: blue
+    }
+
+    .accordion {
+      background-color: #100e17;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      transition: 0.4s;
+    }
+
+    .active,
+    .accordion:hover {
+      background-color: #100e30;
+    }
+
+    .panel {
+      padding: 0 18px;
+      display: none;
+      background-color: #100e17;
+      overflow: hidden;
+    }
+  </style>
 </head>
 
 <body bgcolor="black" class="">
@@ -95,52 +99,53 @@
             </a>
           </li>
           <li>
-              <a href="/logout">
-                <i class="tim-icons icon-pin"></i>
-                <p>Logout</p>
-              </a>
-            </li>
+            <a href="/logout">
+              <i class="tim-icons icon-pin"></i>
+              <p>Logout</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
     <div class="main-panel">
       <!-- Navbar -->
-     
+
       <!-- End Navbar -->
       <div class="content">
         <!-- ======================================================================================================================== -->
         <div class="row">
-         
-            <div class="col-lg-4">
-                    <div class="card card-chart">
-                      <div class="card-header">
-                        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Week</h3>
-                        <h4 class="card-title" id="LatePerc"></h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="chart-area">
-                          <canvas id="PayPerChart"></canvas>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-      <div class="col-lg-4">
-        <div class="card card-chart">
-          <div class="card-header">
-            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Month</h3>
-            <h4 class="card-title" id="EMICount"></h4>
-          </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="EMIChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4">
+
+          <div class="col-lg-4">
             <div class="card card-chart">
               <div class="card-header">
-                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Mode of Paymeny Monthly</h3>
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Week</h3>
+                <h4 class="card-title" id="LatePerc"></h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="PayPerChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Ratio This Month</h3>
+                <h4 class="card-title" id="EMICount"></h4>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="EMIChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Mode of Paymeny Monthly
+                </h3>
                 <h4 class="card-title" id="EMICount"> </h4>
               </div>
               <div class="card-body">
@@ -150,20 +155,20 @@
               </div>
             </div>
           </div>
-    </div>
-       <!-- ========================================================================================================================= -->
+        </div>
+        <!-- ========================================================================================================================= -->
         <div class="row">
-         
-                <div class="col-lg-3">
-                        <div class="card card-chart">
-                          <div class="card-header">
-                            <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Recieved Today</h3>
-                            <h1 class="blueCard" id="MoneyRecievedToday"></h1>
-                          </div>
-                          <div class="card-body">
-                          </div>
-                        </div>
-                      </div>
+
+          <div class="col-lg-3">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Money Recieved Today</h3>
+                <h1 class="blueCard" id="MoneyRecievedToday"></h1>
+              </div>
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
           <div class="col-lg-3">
             <div class="card card-chart">
               <div class="card-header">
@@ -175,968 +180,959 @@
             </div>
           </div>
           <div class="col-lg-3">
-                <div class="card card-chart">
-                  <div class="card-header">
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Cases Closed</h3>
-                    <h1 class="" id="ClosedCases"></h1>
-                  </div>
-                  <div class="card-body">
-                  </div>
-                </div>
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Cases Closed</h3>
+                <h1 class="" id="ClosedCases"></h1>
               </div>
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
 
-              <div class="col-lg-3">
-                  <div class="card card-chart">
-                    <div class="card-header">
-                      <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Total Money Lent</h3>
-                      <h1 class="" id="TotalLent"></h1>
-                    </div>
-                    <div class="card-body">
-                    </div>
-                  </div>
-                </div>
+          <div class="col-lg-3">
+            <div class="card card-chart">
+              <div class="card-header">
+                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i>Total Money Lent</h3>
+                <h1 class="" id="TotalLent"></h1>
+              </div>
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
         </div>
-        
+
 
         <!-- ============================================================================================================================= -->
         <div class="row">
-            <div class="col-12">
-              <div class="card card-chart">
-                <div class="card-header ">
-                  <div class="row">
-                    <div class="col-sm-6 text-left">
-                      <h2 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>Monthly Expected Income</h2>
-                    </div>
-              
+          <div class="col-12">
+            <div class="card card-chart">
+              <div class="card-header ">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h2 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>Monthly Expected Income
+                    </h2>
                   </div>
+
                 </div>
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="chartBig1"></canvas>
-                  </div>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="chartBig1"></canvas>
                 </div>
               </div>
             </div>
           </div>
+        </div>
         <!-- ================================================================================================================================-->
-    
+
         <!-- ================================================================================================================================-->
-        
+
         <div class="row">
-            <div class="col-12">
-              <div class="card card-chart">
-                <div class="card-header ">
-                  <div class="row">
-                    <div class="col-sm-6 text-left">
-                      <h2 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>Recovery Rate</h2>
-                    </div>
-              
+          <div class="col-12">
+            <div class="card card-chart">
+              <div class="card-header ">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h2 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i>Recovery Rate</h2>
                   </div>
+
                 </div>
-                <div class="card-body">
-                  <div class="chart-area">
-                    <canvas id="chartBig2"></canvas>
-                  </div>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                  <canvas id="chartBig2"></canvas>
                 </div>
               </div>
             </div>
           </div>
-        
+        </div>
+
         <!-- ================================================================================================================================= -->
-        
-     <!-- ================================================================================================================================================= -->
-    </div>
-  </div>
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Enter Password</h4>
-        </div>
-        <div class="modal-body row">
-          <input id="pass"></input>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="updateOkay()">Submit</button>
-        </div>
+
+        <!-- ================================================================================================================================================= -->
       </div>
-      
     </div>
-  </div>
- 
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
-  <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
-        $navbar = $('.navbar');
-        $main_panel = $('.main-panel');
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
 
-        $full_page = $('.full-page');
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Enter Password</h4>
+          </div>
+          <div class="modal-body row">
+            <input id="pass"></input>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="updateOkay()">Submit</button>
+          </div>
+        </div>
 
-        $sidebar_responsive = $('body > .navbar-collapse');
-        sidebar_mini_active = true;
-        white_color = false;
+      </div>
+    </div>
 
-        window_width = $(window).width();
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!-- Chart JS -->
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script>
+      $(document).ready(function () {
+        $().ready(function () {
+          $sidebar = $('.sidebar');
+          $navbar = $('.navbar');
+          $main_panel = $('.main-panel');
 
-        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+          $full_page = $('.full-page');
+
+          $sidebar_responsive = $('body > .navbar-collapse');
+          sidebar_mini_active = true;
+          white_color = false;
+
+          window_width = $(window).width();
+
+          fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
 
 
-        $('.fixed-plugin a').click(function(event) {
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
+          $('.fixed-plugin a').click(function (event) {
+            if ($(this).hasClass('switch-trigger')) {
+              if (event.stopPropagation) {
+                event.stopPropagation();
+              } else if (window.event) {
+                window.event.cancelBubble = true;
+              }
             }
-          }
+          });
+
+          $('.fixed-plugin .background-color span').click(function () {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+
+            var new_color = $(this).data('color');
+
+            if ($sidebar.length != 0) {
+              $sidebar.attr('data', new_color);
+            }
+
+            if ($main_panel.length != 0) {
+              $main_panel.attr('data', new_color);
+            }
+
+            if ($full_page.length != 0) {
+              $full_page.attr('filter-color', new_color);
+            }
+
+            if ($sidebar_responsive.length != 0) {
+              $sidebar_responsive.attr('data', new_color);
+            }
+          });
+
+          $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+            var $btn = $(this);
+
+            if (sidebar_mini_active == true) {
+              $('body').removeClass('sidebar-mini');
+              sidebar_mini_active = false;
+              blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+            } else {
+              $('body').addClass('sidebar-mini');
+              sidebar_mini_active = true;
+              blackDashboard.showSidebarMessage('Sidebar mini activated...');
+            }
+
+            // we simulate the window Resize so the charts will get updated in realtime.
+            var simulateWindowResize = setInterval(function () {
+              window.dispatchEvent(new Event('resize'));
+            }, 180);
+
+            // we stop the simulation of Window Resize after the animations are completed
+            setTimeout(function () {
+              clearInterval(simulateWindowResize);
+            }, 1000);
+          });
+
+          $('.switch-change-color input').on("switchChange.bootstrapSwitch", function () {
+            var $btn = $(this);
+
+            if (white_color == true) {
+
+              $('body').addClass('change-background');
+              setTimeout(function () {
+                $('body').removeClass('change-background');
+                $('body').removeClass('white-content');
+              }, 900);
+              white_color = false;
+            } else {
+
+              $('body').addClass('change-background');
+              setTimeout(function () {
+                $('body').removeClass('change-background');
+                $('body').addClass('white-content');
+              }, 900);
+
+              white_color = true;
+            }
+
+
+          });
+
+          $('.light-badge').click(function () {
+            $('body').addClass('white-content');
+          });
+
+          $('.dark-badge').click(function () {
+            $('body').removeClass('white-content');
+          });
         });
 
-        $('.fixed-plugin .background-color span').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
+        //==================================================Firebase==================================================//
 
-          var new_color = $(this).data('color');
+        axios.get('http://821c1c7a.ngrok.io/')
+          .then(function (response) {
+            console.log(response.data);
 
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data', new_color);
-          }
+            var ab = response.data
 
-          if ($main_panel.length != 0) {
-            $main_panel.attr('data', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data', new_color);
-          }
-        });
-
-        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            sidebar_mini_active = false;
-            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
-          } else {
-            $('body').addClass('sidebar-mini');
-            sidebar_mini_active = true;
-            blackDashboard.showSidebarMessage('Sidebar mini activated...');
-          }
-
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
-
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
-        });
-
-        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
-          var $btn = $(this);
-
-          if (white_color == true) {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').removeClass('white-content');
-            }, 900);
-            white_color = false;
-          } else {
-
-            $('body').addClass('change-background');
-            setTimeout(function() {
-              $('body').removeClass('change-background');
-              $('body').addClass('white-content');
-            }, 900);
-
-            white_color = true;
-          }
+            //==========================================================================================================================//
 
 
-        });
+            //===============================================Line 1======================================================================//
 
-        $('.light-badge').click(function() {
-          $('body').addClass('white-content');
-        });
+            var casesArray = Object.keys(ab)
+            console.log(casesArray)
+            var date = new Date()
+            var currDay = date.getDate()
+            var moneyRecToday = 0
+            var supMoney = 0
+            var activeCases = 0
+            var closedCases = 0;
+            var totalLent = 0
+            console.log("GGGGGGGGGGGGGGGGGGGGGGGGGG")
+            for (var i = 0; i < casesArray.length; i++) {
+              // console.log(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]])
+              if (ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["RecievedOn"] == currDay) {
+                moneyRecToday += ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["AmountRecieved"]
+                console.log(moneyRecToday)
+                console.log("%%%%%%%%%%%%%%")
+              }
+              if (ab[casesArray[i]]["Date"] == currDay) {
+                supMoney += ab[casesArray[i]]["EMII"]
+              }
+              if (ab[casesArray[i]]["Term"] == ab[casesArray[i]]["currentMonth"]) {
+                closedCases++;
+              }
+              else if (ab[casesArray[i]]["Term"] != ab[casesArray[i]]["currentMonth"]) {
+                activeCases++
+                totalLent += ab[casesArray[i]]["loan"]
+              }
 
-        $('.dark-badge').click(function() {
-          $('body').removeClass('white-content');
-        });
+
+            }
+            document.getElementById("MoneyRecievedToday").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i> <b>${moneyRecToday}<b>`
+            document.getElementById("ClosedCases").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i> <b>${closedCases}<b>`
+            document.getElementById("ActiveCases").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i> <b>${activeCases}<b>`
+            document.getElementById("TotalLent").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i> <b>${totalLent}<b>`
+
+
+            //=============================================================================================================================//
+            var ctx = document.getElementById("PayChart").getContext("2d");
+
+            gradientPayChartConfiguration = {
+              maintainAspectRatio: false,
+              legend: {
+                display: false
+              },
+
+              tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+              },
+              responsive: true,
+              scales: {
+                yAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    suggestedMin: 0,
+                    suggestedmax: casesArray.length,
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }],
+
+                xAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }]
+              }
+            };
+
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+            gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+            gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+            var cash = 0
+            var cheq = 0
+            var bankD = 0
+            // var a=Object.keys(ab["EMI"])
+            for (var i = 0; i < casesArray.length; i++) {
+              if (ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeCash"] != 'NIL') {
+                cash++;
+              }
+              else if (ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeCheque"] != 'NIL') {
+                cheq++;
+              }
+              else if (ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeDeposit"] != 'NIL') {
+                bankD++
+              }
+            }
+
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              responsive: true,
+              legend: {
+                display: false
+              },
+              data: {
+                labels: ["Cash", "Cheque", "Bank Deposit"],
+                datasets: [{
+                  label: "Modes of Payment",
+                  fill: true,
+                  backgroundColor: gradientStroke,
+                  hoverBackgroundColor: gradientStroke,
+                  borderColor: '#1f8ef1',
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  data: [cash, cheq, bankD],
+                }]
+              },
+              options: gradientPayChartConfiguration
+            });
+
+            //================================================For Late Frequency Graph=================================================//
+            var ctx = document.getElementById("chartBig1").getContext('2d');
+            var chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var chart_data = []
+            var exp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            var real = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            var e
+            for (var i = 0; i < casesArray.length; i++) {
+              e = Object.keys(ab[casesArray[i]]["EMI"])
+              for (var j = 0; j < e.length; j++) {
+                if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnYear"] == 2019) {
+
+                  if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Jan") {
+                    console.log("JAAAN")
+                    exp[0] += ab[casesArray[i]]["EMII"]
+                    console.log("BBBBBBBB " + exp[0])
+                    try {
+                      real[0] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                    }
+                    catch (e) {
+                      console.log(e)
+                    }
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Feb") {
+                    exp[1] += ab[casesArray[i]]["EMII"]
+                    real[1] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Mar") {
+                    exp[2] += ab[casesArray[i]]["EMII"]
+                    real[2] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Apr") {
+                    exp[3] += ab[casesArray[i]]["EMII"]
+                    real[3] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "May") {
+                    exp[4] += ab[casesArray[i]]["EMII"]
+                    real[4] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Jun") {
+                    exp[5] += ab[casesArray[i]]["EMII"]
+                    real[5] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Jul") {
+                    exp[6] += ab[casesArray[i]]["EMII"]
+                    real[6] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Aug") {
+                    exp[7] += ab[casesArray[i]]["EMII"]
+                    real[7] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Sep") {
+                    exp[8] += ab[casesArray[i]]["EMII"]
+                    real[8] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Oct") {
+                    exp[9] += ab[casesArray[i]]["EMII"]
+                    real[9] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Nov") {
+                    exp[10] += ab[casesArray[i]]["EMII"]
+                    real[10] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                  else if (ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"] == "Dec") {
+                    exp[11] += ab[casesArray[i]]["EMII"]
+                    real[11] += ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
+                  }
+                }
+              }
+            }
+            console.log("AAAAAAAAAAAAAAAAAA " + real)
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+            // Global Options:
+            Chart.defaults.global.defaultFontColor = 'black';
+            Chart.defaults.global.defaultFontSize = 16;
+            var gradientStroke = ctx.createLinearGradient(0, 0, 230, 50);
+            var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
+            // gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+            // gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+
+
+            gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
+            // gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
+            // gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
+
+            var data = {
+              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+              datasets: [{
+                label: "Expected Income",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "#93fcc2",
+                borderColor: "#93fcc2", // The main line color
+                borderCapStyle: 'square',
+                borderDash: [], // try [5, 15] for instance
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "black",
+                pointBackgroundColor: "white",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "yellow",
+                pointHoverBorderColor: "brown",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: true
+                data: exp,
+                spanGaps: true,
+              }, {
+                label: "Actual Income",
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: gradientStroke2,
+                borderColor: "red",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "white",
+                pointBackgroundColor: "black",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "brown",
+                pointHoverBorderColor: "yellow",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: false
+                data: real,
+                spanGaps: false,
+              }
+
+              ]
+            };
+
+            // Notice the scaleLabel at the same level as Ticks
+            var options = {
+              legend: {
+                labels: {
+                  fontColor: "white",
+                  fontSize: 18
+                }
+              },
+              maintainAspectRatio: false,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    fontColor: "white"
+                  }
+                }],
+                xAxes: [{
+                  ticks: {
+                    fontColor: "white"
+                  }
+                }]
+              }
+            };
+
+            // Chart declaration:
+            var myBarChart = new Chart(ctx, {
+              type: 'line',
+              data: data,
+              options: options
+            });
+
+            //================================================For Late Frequency Graph=================================================//
+
+            //================================================For Total EMI Graph======================================================//
+
+            var ctx = document.getElementById("EMIChart").getContext("2d");
+
+            gradientDoughnutChartConfiguration = {
+              maintainAspectRatio: false,
+              legend: {
+                display: false
+              },
+
+              tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+              },
+              responsive: true,
+              scales: {
+                yAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }],
+
+                xAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }]
+              }
+            };
+
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+            var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
+            // gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+            // gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+
+            gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
+            // gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
+            // gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
+            var mr = 0
+            var mnr = 0
+            var emiLabel = ["Money Recieved", "Money Not Recieved"]
+            for (var i = 0; i < casesArray.length; i++) {
+              if (ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["moneyRecieved"] == 1) {
+                mr += ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["AmountRecieved"]
+              }
+              else {
+                mnr += ab[casesArray[i]]["EMII"]
+              }
+            }
+
+
+            var myChart = new Chart(ctx, {
+              type: 'doughnut',
+              responsive: true,
+              legend: {
+                display: false
+              },
+              data: {
+                labels: emiLabel,
+                datasets: [{
+                  label: "EMI Details",
+                  fill: true,
+                  backgroundColor: [gradientStroke, gradientStroke2],
+                  hoverBackgroundColor: [gradientStroke, gradientStroke2],
+                  borderColor: ['#93fcc2', '#ff0000'],
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  data: [mr, mnr],
+                }]
+              },
+              options: gradientDoughnutChartConfiguration
+            });
+            document.getElementById("EMICount").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i>Total EMI ${ab["Term"]}`
+            //=========================================================================================================================//
+
+            //=============================================Payment % Chart=============================================================//
+            var ctx = document.getElementById("PayPerChart").getContext("2d");
+
+            gradientLatePerChartConfiguration = {
+              maintainAspectRatio: false,
+              legend: {
+                display: false
+              },
+
+              tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+              },
+              responsive: true,
+              scales: {
+                yAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    min: 0,
+                    max: 5,
+                    stepSize: 1,
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }],
+
+                xAxes: [{
+
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                  }
+                }]
+              }
+            };
+
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
+            gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
+            gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
+
+            gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
+            gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
+            gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
+
+            var dataC = []
+            if (moneyRecToday > supMoney) {
+              dataC = [0, moneyRecToday]
+            }
+            else {
+              dataC = [supMoney - moneyRecToday, moneyRecToday]
+            }
+            console.log("AAAAAAAAAAAAAAAAAAAAAA " + dataC)
+            var myChart = new Chart(ctx, {
+              type: 'pie',
+              responsive: true,
+              legend: {
+                display: false
+              },
+              data: {
+                labels: ["Money Remaining", "Money Recieved"],
+                datasets: [{
+                  label: "",
+                  fill: true,
+                  backgroundColor: [gradientStroke2, gradientStroke],
+                  hoverBackgroundColor: [gradientStroke2, gradientStroke],
+                  borderColor: ['#ff0000', '#93fcc2'],
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  data: dataC,
+                }]
+              },
+              options: gradientLatePerChartConfiguration
+            });
+
+            document.getElementById("LatePerc").innerHTML = `<i class="tim-icons icon-delivery-fast text-info"></i>Late Percentage Rs. ${moneyRecToday}`
+            //=========================================================================================================================//
+
+            //=================================================Mode of Payment Chart===================================================//
+
+            var ctx = document.getElementById("chartBig2").getContext('2d');
+            var chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            var chart_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            for (var i = 0; i < real.length; i++) {
+              chart_data[i] = (real[i] / exp[i]) + 100
+            }
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientChartOptionsConfigurationWithTooltipPurple = {      //configuration of chart axises and line
+              maintainAspectRatio: false,
+              legend: {
+                display: false
+              },
+
+              tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+              },
+              responsive: true,
+              scales: {
+                yAxes: [{
+                  barPercentage: 1,
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(29,140,248,0.0)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    beginAtZero: true,
+
+                    padding: 2,
+                    fontColor: "#9a9a9a"
+                  }
+                }],
+
+                xAxes: [{
+                  barPercentage: 1,
+                  gridLines: {
+                    drawBorder: false,
+                    color: 'rgba(225,78,202,0.1)',
+                    zeroLineColor: "transparent",
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontColor: "#9a9a9a"
+                  }
+                }]
+              }
+            };
+
+            gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+            gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+            gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+            var config = {
+              type: 'bar',
+              data: {
+                labels: chart_labels,
+                datasets: [{
+                  label: "Recovery Rate",
+                  fill: true,
+                  backgroundColor: gradientStroke,
+                  borderColor: '#d346b1',
+                  borderWidth: 2,
+                  borderDash: [],
+                  borderDashOffset: 0.0,
+                  pointBackgroundColor: '#d346b1',
+                  pointBorderColor: 'rgba(255,255,255,0)',
+                  pointHoverBackgroundColor: '#d346b1',
+                  pointBorderWidth: 20,
+                  pointHoverRadius: 4,
+                  pointHoverBorderWidth: 15,
+                  pointRadius: 8,
+                  data: chart_data,
+                }]
+              },
+              options: gradientChartOptionsConfigurationWithTooltipPurple
+            };
+            var myChartData = new Chart(ctx, config);
+
+            //=========================================================================================================================//
+
+            // var emida=Object.keys(ab)
+            // var tdata = ""
+            // for (var i = 0; i < emida.length; i++) {
+            //   var mode = ""
+            //   if (ab["EMI"][emida[i]]["ModeCash"] != "NIL") {
+            //     mode = "Cash"
+            //   }
+            //   else if (ab["EMI"][emida[i]]["ModeCheque"] != "NIL") {
+            //     mode = "Cheque " + ab["EMI"][emida[i]]["ModeCheque"]
+            //   }
+            //   else if (ab["EMI"][emida[i]]["ModeDeposit"] != "NIL") {
+            //     mode = "Deposit " + ab["EMI"][emida[i]]["ModeDeposit"]
+            //     1
+            //   }
+            //   tdata = tdata.concat("<tr>")
+            //   tdata = tdata.concat(`<td>${ab["EMI"][emida[i]]["AmountRecieved"]}</td><td>${mode}</td><td>${ab["EMI"][emida[i]]["RecievedBy"]}</td><td>${ab["EMI"][emida[i]]["RecievedOn"]}</td>`)
+            //   tdata = tdata.concat("</tr>")
+            // }
+            // document.getElementById('tbody').innerHTML = tdata
+
+            // ==================================================================================================================================================//
+
+            // var pan=document.getElementById("mainPanel")
+            // var panContent=""
+            // for(var i=0;i<emida.length;i++){
+            //   panContent=panContent.concat(`<button class="accordion">${emida[i]}</button>
+            //    <div class="panel" id="mainPanel">
+            //    <div class="row"><div class="col-sm-3"><label> </label></div> <div class="col-sm-3"><label> </label></div></div>
+            //    </div>`)
+            // }
+            // pan.innerHTML=panContent
+
+
+            // var acc = document.getElementsByClassName("accordion");
+            // var i;
+
+            // for (i = 0; i < acc.length; i++) {
+            //   acc[i].addEventListener("click", function() {
+            //     this.classList.toggle("active");
+            //     var panel = this.nextElementSibling;
+            //     if (panel.style.display === "block") {
+            //       panel.style.display = "none";
+            //     } else {
+            //       panel.style.display = "block";
+            //     }
+            //   });
+            // }
+            document.getElementById("FirstM").value = ab["1st Mnth"]
+            document.getElementById("Balance").value = ab["Balance"]
+            document.getElementById("Cheque").value = ab["Cheque"]
+            document.getElementById("Date").value = ab["Date"]
+            document.getElementById("EMII").value = ab["EMII"]
+            document.getElementById("LastM").value = ab["Last Month"]
+            document.getElementById("Name").value = ab["Name"]
+            document.getElementById("Term").value = ab["Term"]
+            document.getElementById("Total").value = ab["Total"]
+            document.getElementById("Due").value = ab["due"]
+            document.getElementById("Loan").value = ab["loan"]
+
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+
+
+
+
       });
 
-//==================================================Firebase==================================================//
-
-    var firebaseConfig = {
-        apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
-        authDomain: "nefirebase-7624e.firebaseapp.com",
-        databaseURL: "https://nefirebase-7624e.firebaseio.com",
-        projectId: "nefirebase-7624e",
-        storageBucket: "",
-        messagingSenderId: "75788997805",
-        appId: "1:75788997805:web:cfa574138eef051c352224"
-        };
-// Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        var database=firebase.database()
-        var ref=database.ref("/users/")
-        ref.on('value',gotData,errData)
-        function gotData(response){
-            console.log(response.val())
-            var ab=response.val()
-  
-//==========================================================================================================================//
-
-
-//===============================================Line 1======================================================================//
-
-var casesArray=Object.keys(ab)
-console.log(casesArray)
-var date=new Date()
-var currDay=date.getDate()
-var moneyRecToday=0
-var supMoney=0
-var activeCases=0
-var closedCases=0;
-var totalLent=0
-console.log("GGGGGGGGGGGGGGGGGGGGGGGGGG")
-for(var i=0;i<casesArray.length;i++){
-  // console.log(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]])
-    if(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["RecievedOn"]==currDay){
-      moneyRecToday+=ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["AmountRecieved"]
-      console.log(moneyRecToday)
-      console.log("%%%%%%%%%%%%%%") 
-    }
-    if(ab[casesArray[i]]["Date"]==currDay){
-      supMoney+=ab[casesArray[i]]["EMII"]
-    }
-    if(ab[casesArray[i]]["Term"]==ab[casesArray[i]]["currentMonth"]){
-      closedCases++;
-    }
-    else if(ab[casesArray[i]]["Term"]!=ab[casesArray[i]]["currentMonth"]){
-      activeCases++
-      totalLent+=ab[casesArray[i]]["loan"]
-    }
-    
-
-}
-document.getElementById("MoneyRecievedToday").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> <b>${moneyRecToday}<b>`
-document.getElementById("ClosedCases").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> <b>${closedCases}<b>`
-document.getElementById("ActiveCases").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> <b>${activeCases}<b>`
-document.getElementById("TotalLent").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i> <b>${totalLent}<b>`
-
-
-//=============================================================================================================================//
-var ctx = document.getElementById("PayChart").getContext("2d");
-
-gradientPayChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 0,
-            suggestedmax: casesArray.length,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
+      function forUpdate() {
+        document.getElementById("hidBtn").classList.toggle("hidBtn")
+        document.getElementById("recBtn").classList.toggle("hidBtn")
+        document.getElementById("updBtn").classList.toggle("hidBtn")
+        document.getElementById("FirstM").readOnly = false
+        document.getElementById("Balance").readOnly = false
+        document.getElementById("Cheque").readOnly = false
+        document.getElementById("Date").readOnly = false
+        document.getElementById("EMII").readOnly = false
+        document.getElementById("LastM").readOnly = false
+        document.getElementById("Name").readOnly = false
+        document.getElementById("Term").readOnly = false
+        document.getElementById("Total").readOnly = false
+        document.getElementById("Due").readOnly = false
+        document.getElementById("Loan").readOnly = false
       }
-    };
+      function updateOkay() {
+        document.getElementById("hidBtn").classList.toggle("hidBtn")
+        document.getElementById("recBtn").classList.toggle("hidBtn")
+        document.getElementById("updBtn").classList.toggle("hidBtn")
+        document.getElementById("FirstM").readOnly = true
+        document.getElementById("Balance").readOnly = true
+        document.getElementById("Cheque").readOnly = true
+        document.getElementById("Date").readOnly = true
+        document.getElementById("EMII").readOnly = true
+        document.getElementById("LastM").readOnly = true
+        document.getElementById("Name").readOnly = true
+        document.getElementById("Term").readOnly = true
+        document.getElementById("Total").readOnly = true
+        document.getElementById("Due").readOnly = true
+        document.getElementById("Loan").readOnly = true
 
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
-    gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
-
-    var cash=0
-    var cheq=0
-    var bankD=0
-    // var a=Object.keys(ab["EMI"])
-    for(var i=0;i<casesArray.length;i++){
-        if(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeCash"]!='NIL'){
-            cash++;
+        var p = document.getElementById("pass").value
+        console.log("AAAAAAAAAA")
+        var data = {
+          "pass": p,
+          "1st Mnth": document.getElementById("FirstM").value,
+          "Balance": document.getElementById("Balance").value,
+          "Cheque": document.getElementById("Cheque").value,
+          "Date": document.getElementById("Date").value,
+          "EMII": document.getElementById("EMII").value,
+          "Last Month": document.getElementById("LastM").value,
+          "Name": document.getElementById("Name").value,
+          "Term": document.getElementById("Term").value,
+          "Total": document.getElementById("Total").value,
+          "Due": document.getElementById("Due").value,
+          "Loan": document.getElementById("Loan").value,
+          "CaseNo": sessionStorage.getItem("cno")
         }
-        else if(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeCheque"]!='NIL'){
-            cheq++;
-        }
-        else if(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["ModeDeposit"]!='NIL'){
-            bankD++
-        }
-    }
+        axios.post('/updateUser', {
+          data
 
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ["Cash","Cheque","Bank Deposit"],
-        datasets: [{
-          label: "Modes of Payment",
-          fill: true,
-          backgroundColor: gradientStroke,
-          hoverBackgroundColor: gradientStroke,
-          borderColor: '#1f8ef1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data: [cash,cheq,bankD],
-        }]
-      },
-      options: gradientPayChartConfiguration
-    });
+        }).then(function (data) {
+          alert(data.data)
+          console.log(data.data)
+        })
 
-//================================================For Late Frequency Graph=================================================//
-    var ctx = document.getElementById("chartBig1").getContext('2d');
-    var chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var chart_data=[]
-    var exp=[0,0,0,0,0,0,0,0,0,0,0,0]
-    var real=[0,0,0,0,0,0,0,0,0,0,0,0]
-    var e
-    for(var i=0;i<casesArray.length;i++){
-     e=Object.keys(ab[casesArray[i]]["EMI"])
-        for(var j=0;j<e.length;j++){
-            if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnYear"]==2019){
-              
-              if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Jan"){
-                  console.log("JAAAN")
-                  exp[0]+=ab[casesArray[i]]["EMII"]
-                  console.log("BBBBBBBB "+exp[0])
-                  try{
-                  real[0]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-                  }
-                  catch(e){
-                    console.log(e)
-                  }
-              }
-               else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Feb"){
-                  exp[1]+=ab[casesArray[i]]["EMII"]
-                  real[1]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Mar"){
-                  exp[2]+=ab[casesArray[i]]["EMII"]
-                  real[2]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Apr"){
-                  exp[3]+=ab[casesArray[i]]["EMII"]
-                  real[3]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="May"){
-                  exp[4]+=ab[casesArray[i]]["EMII"]
-                  real[4]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Jun"){
-                  exp[5]+=ab[casesArray[i]]["EMII"]
-                  real[5]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Jul"){
-                  exp[6]+=ab[casesArray[i]]["EMII"]
-                  real[6]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Aug"){
-                  exp[7]+=ab[casesArray[i]]["EMII"]
-                  real[7]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Sep"){
-                  exp[8]+=ab[casesArray[i]]["EMII"]
-                  real[8]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Oct"){
-                  exp[9]+=ab[casesArray[i]]["EMII"]
-                  real[9]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Nov"){
-                  exp[10]+=ab[casesArray[i]]["EMII"]
-                  real[10]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-              else if(ab[casesArray[i]]["EMI"][e[j]]["RecievedOnMonth"]=="Dec"){
-                  exp[11]+=ab[casesArray[i]]["EMII"]
-                  real[11]+=ab[casesArray[i]]["EMI"][e[j]]["AmountRecieved"]
-              }
-            }
-        }
-    }
-console.log("AAAAAAAAAAAAAAAAAA "+real)
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-// Global Options:
-Chart.defaults.global.defaultFontColor = 'black';
-Chart.defaults.global.defaultFontSize = 16;
-var gradientStroke = ctx.createLinearGradient(0, 0, 230, 50);
-var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
-
-gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-// gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-// gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
-
-
-gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
-// gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
-// gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
-
-var data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-  datasets: [{
-      label: "Expected Income",
-      fill: false,
-      lineTension: 0.1,
-      backgroundColor: "#93fcc2",
-      borderColor: "#93fcc2", // The main line color
-      borderCapStyle: 'square',
-      borderDash: [], // try [5, 15] for instance
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: "black",
-      pointBackgroundColor: "white",
-      pointBorderWidth: 1,
-      pointHoverRadius: 8,
-      pointHoverBackgroundColor: "yellow",
-      pointHoverBorderColor: "brown",
-      pointHoverBorderWidth: 2,
-      pointRadius: 4,
-      pointHitRadius: 10,
-      // notice the gap in the data and the spanGaps: true
-      data: exp,
-      spanGaps: true,
-    }, {
-      label: "Actual Income",
-      fill: true,
-      lineTension: 0.1,
-      backgroundColor: gradientStroke2,
-      borderColor: "red",
-      borderCapStyle: 'butt',
-      borderDash: [],
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'miter',
-      pointBorderColor: "white",
-      pointBackgroundColor: "black",
-      pointBorderWidth: 1,
-      pointHoverRadius: 8,
-      pointHoverBackgroundColor: "brown",
-      pointHoverBorderColor: "yellow",
-      pointHoverBorderWidth: 2,
-      pointRadius: 4,
-      pointHitRadius: 10,
-      // notice the gap in the data and the spanGaps: false
-      data: real,
-      spanGaps: false,
-    }
-
-  ]
-};
-
-// Notice the scaleLabel at the same level as Ticks
-var options = {legend: {
-            labels: {
-                fontColor: "white",
-                fontSize: 18
-            }
-        },
-  maintainAspectRatio:false,
-  scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true,
-                    fontColor:"white"
-                }
-            }],
-            xAxes: [{
-                ticks: {
-                    fontColor:"white"
-                }
-            }]             
-        }  
-};
-
-// Chart declaration:
-var myBarChart = new Chart(ctx, {
-  type: 'line',
-  data: data,
-  options: options
-});
-   
-//================================================For Late Frequency Graph=================================================//
-
-//================================================For Total EMI Graph======================================================//
- 
-var ctx = document.getElementById("EMIChart").getContext("2d");
-
-gradientDoughnutChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            suggestedMin: 0,
-            suggestedMax: 10,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
       }
-    };
-
-var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-var gradientStroke2 = ctx.createLinearGradient(0, 230, 0, 50);
-
-gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-    // gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-    // gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
-
-gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
-// gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
-// gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
-var mr=0
-var mnr=0
-var emiLabel=["Money Recieved","Money Not Recieved"]
-for(var i=0;i<casesArray.length;i++){
-  if(ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["moneyRecieved"]==1){
-    mr+=ab[casesArray[i]]["EMI"][ab[casesArray[i]]["currentMonth"]]["AmountRecieved"]
-  }
-  else{
-    mnr+=ab[casesArray[i]]["EMII"]
-  }
-}
-
-
-var myChart = new Chart(ctx, {
-  type: 'doughnut',
-  responsive: true,
-  legend: {
-    display: false
-  },
-  data: {
-    labels: emiLabel,
-    datasets: [{
-      label: "EMI Details",
-      fill: true,
-      backgroundColor: [gradientStroke,gradientStroke2],
-      hoverBackgroundColor: [gradientStroke,gradientStroke2],
-      borderColor: ['#93fcc2','#ff0000'],
-      borderWidth: 2,
-      borderDash: [],
-      borderDashOffset: 0.0,
-      data: [mr,mnr],
-    }]
-  },
-  options: gradientDoughnutChartConfiguration
-});
-document.getElementById("EMICount").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i>Total EMI ${ab["Term"]}`
-//=========================================================================================================================//
-
-//=============================================Payment % Chart=============================================================//
-var ctx = document.getElementById("PayPerChart").getContext("2d");
-
-gradientLatePerChartConfiguration = {
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            min: 0,
-            max: 5,
-            stepSize:1,
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }],
-
-        xAxes: [{
-
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9e9e9e"
-          }
-        }]
-      }
-    };
-
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(147, 252, 194,0.2)');
-    gradientStroke.addColorStop(0.4, 'rgba(147, 252, 194,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(147, 252, 194,0)'); //green colors
-
-    gradientStroke2.addColorStop(1, 'rgba(251,1,33,0.2)');
-gradientStroke2.addColorStop(0.4, 'rgba(251,1,33,0.0)');
-gradientStroke2.addColorStop(0, 'rgba(251,1,33,0)'); //red colors
-    
-    var dataC=[]
-    if(moneyRecToday>supMoney){
-      dataC=[0,moneyRecToday]
-    }
-    else{
-      dataC=[supMoney-moneyRecToday,moneyRecToday]
-    }
-    console.log("AAAAAAAAAAAAAAAAAAAAAA "+dataC)
-    var myChart = new Chart(ctx, {
-      type: 'pie',
-      responsive: true,
-      legend: {
-        display: false
-      },
-      data: {
-        labels: ["Money Remaining","Money Recieved"],
-        datasets: [{
-          label: "",
-          fill: true,
-          backgroundColor: [gradientStroke2,gradientStroke],
-          hoverBackgroundColor: [gradientStroke2,gradientStroke],
-          borderColor: ['#ff0000','#93fcc2'],
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          data:dataC ,
-        }]
-      },
-      options: gradientLatePerChartConfiguration
-    });
-
-    document.getElementById("LatePerc").innerHTML=`<i class="tim-icons icon-delivery-fast text-info"></i>Late Percentage Rs. ${moneyRecToday}`
-//=========================================================================================================================//
-
-//=================================================Mode of Payment Chart===================================================//
-
-var ctx = document.getElementById("chartBig2").getContext('2d');
-    var chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    var chart_data=[0,0,0,0,0,0,0,0,0,0,0]
-    for(var i=0;i<real.length;i++){
-      chart_data[i]=(real[i]/exp[i])+100
-    }
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientChartOptionsConfigurationWithTooltipPurple = {      //configuration of chart axises and line
-      maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
-
-      tooltips: {
-        backgroundColor: '#f5f5f5',
-        titleFontColor: '#333',
-        bodyFontColor: '#666',
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest"
-      },
-      responsive: true,
-      scales: {
-        yAxes: [{
-          barPercentage: 1,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(29,140,248,0.0)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            beginAtZero: true,
-           
-            padding: 2,
-            fontColor: "#9a9a9a"
-          }
-        }],
-
-        xAxes: [{
-          barPercentage: 1,
-          gridLines: {
-            drawBorder: false,
-            color: 'rgba(225,78,202,0.1)',
-            zeroLineColor: "transparent",
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }]
-      }
-    };
-
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-    var config = {
-      type: 'bar',
-      data: {
-        labels: chart_labels,
-        datasets: [{
-          label: "Recovery Rate",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 8,
-          data: chart_data,
-        }]
-      },
-      options: gradientChartOptionsConfigurationWithTooltipPurple
-    };
-    var myChartData = new Chart(ctx, config);
-
-//=========================================================================================================================//
-
-
-var tdata=""
-for(var i=0;i<emida.length;i++){
-  var mode=""
-  if(ab["EMI"][emida[i]]["ModeCash"]!="NIL"){
-    mode="Cash"
-  }
-  else if(ab["EMI"][emida[i]]["ModeCheque"]!="NIL"){
-    mode="Cheque "+ab["EMI"][emida[i]]["ModeCheque"]
-  }
-  else if(ab["EMI"][emida[i]]["ModeDeposit"]!="NIL"){
-    mode="Deposit "+ab["EMI"][emida[i]]["ModeDeposit"]
-1  }
-  tdata=tdata.concat("<tr>")
-    tdata=tdata.concat(`<td>${ab["EMI"][emida[i]]["AmountRecieved"]}</td><td>${mode}</td><td>${ab["EMI"][emida[i]]["RecievedBy"]}</td><td>${ab["EMI"][emida[i]]["RecievedOn"]}</td>`)
-  tdata=tdata.concat("</tr>")
-}
-document.getElementById('tbody').innerHTML=tdata
-
-// ==================================================================================================================================================//
-
-// var pan=document.getElementById("mainPanel")
-// var panContent=""
-// for(var i=0;i<emida.length;i++){
-//   panContent=panContent.concat(`<button class="accordion">${emida[i]}</button>
-//    <div class="panel" id="mainPanel">
-//    <div class="row"><div class="col-sm-3"><label> </label></div> <div class="col-sm-3"><label> </label></div></div>
-//    </div>`)
-// }
-// pan.innerHTML=panContent
-
-
-// var acc = document.getElementsByClassName("accordion");
-// var i;
-
-// for (i = 0; i < acc.length; i++) {
-//   acc[i].addEventListener("click", function() {
-//     this.classList.toggle("active");
-//     var panel = this.nextElementSibling;
-//     if (panel.style.display === "block") {
-//       panel.style.display = "none";
-//     } else {
-//       panel.style.display = "block";
-//     }
-//   });
-// }
-  document.getElementById("FirstM").value=ab["1st Mnth"]
-  document.getElementById("Balance").value=ab["Balance"]
-  document.getElementById("Cheque").value=ab["Cheque"]
-  document.getElementById("Date").value=ab["Date"]
-  document.getElementById("EMII").value=ab["EMII"]
-  document.getElementById("LastM").value=ab["Last Month"]
-  document.getElementById("Name").value=ab["Name"]
-  document.getElementById("Term").value=ab["Term"]
-  document.getElementById("Total").value=ab["Total"]
-  document.getElementById("Due").value=ab["due"]
-  document.getElementById("Loan").value=ab["loan"]
 
 
 
+    </script>
+    <script>
+      $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
 
-        }
+      });
 
+    </script>
 
-        function errData(err){
-          console.log(err)
-        }
-    });
-
-    function forUpdate(){
-  document.getElementById("hidBtn").classList.toggle("hidBtn")
-  document.getElementById("recBtn").classList.toggle("hidBtn")
-  document.getElementById("updBtn").classList.toggle("hidBtn")
-  document.getElementById("FirstM").readOnly=false
-  document.getElementById("Balance").readOnly=false
-  document.getElementById("Cheque").readOnly=false
-  document.getElementById("Date").readOnly=false
-  document.getElementById("EMII").readOnly=false
-  document.getElementById("LastM").readOnly=false
-  document.getElementById("Name").readOnly=false
-  document.getElementById("Term").readOnly=false
-  document.getElementById("Total").readOnly=false
-  document.getElementById("Due").readOnly=false
-  document.getElementById("Loan").readOnly=false
-}
-function updateOkay(){
-  document.getElementById("hidBtn").classList.toggle("hidBtn")
-  document.getElementById("recBtn").classList.toggle("hidBtn")
-  document.getElementById("updBtn").classList.toggle("hidBtn")
-  document.getElementById("FirstM").readOnly=true
-  document.getElementById("Balance").readOnly=true
-  document.getElementById("Cheque").readOnly=true
-  document.getElementById("Date").readOnly=true
-  document.getElementById("EMII").readOnly=true
-  document.getElementById("LastM").readOnly=true
-  document.getElementById("Name").readOnly=true
-  document.getElementById("Term").readOnly=true
-  document.getElementById("Total").readOnly=true
-  document.getElementById("Due").readOnly=true
-  document.getElementById("Loan").readOnly=true
-
-  var p=document.getElementById("pass").value
-  console.log("AAAAAAAAAA")
-  var data={
-                            "pass":p,
-                           "1st Mnth":document.getElementById("FirstM").value,
-                           "Balance":document.getElementById("Balance").value,
-                           "Cheque":document.getElementById("Cheque").value,
-                           "Date":document.getElementById("Date").value,
-                           "EMII":document.getElementById("EMII").value,
-                           "Last Month":document.getElementById("LastM").value,
-                           "Name":document.getElementById("Name").value,
-                           "Term":document.getElementById("Term").value,
-                           "Total":document.getElementById("Total").value,
-                           "Due":document.getElementById("Due").value,
-                           "Loan":document.getElementById("Loan").value,
-                           "CaseNo":sessionStorage.getItem("cno")
-  }
-  axios.post('/updateUser', {
-                           data
-                    
-                    }).then(function(data){
-                      alert(data.data)
-                      console.log(data.data)
-                    })
-  
-}
-
-
-        
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/js/demos.js
-     demo.initDashboardPageCharts();
-
-    });
-
-  </script>
- 
 </body>
 
 </html>

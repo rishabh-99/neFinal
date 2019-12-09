@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
-        <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="./style.css">
-        <!-- <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" /> -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>NE:Display Users</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./style.css">
+  <!-- <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NE:Display Users</title>
 </head>
+
 <body>
   <div class="sidebar">
     <!--
@@ -22,7 +25,7 @@
           NE
         </a>
         <a href="javascript:void(0)" class="simple-text logo-normal">
-         Dashboard
+          Dashboard
         </a>
       </div>
       <ul class="nav">
@@ -38,7 +41,7 @@
             <p>New User</p>
           </a>
         </li>
-        
+
         <li class="active">
           <a href="/display">
             <i class="tim-icons icon-bell-55"></i>
@@ -46,82 +49,69 @@
           </a>
         </li>
         <li>
-            <a href="/logout">
-              <i class="tim-icons icon-pin"></i>
-              <p>Logout</p>
-            </a>
-          </li>
-       
+          <a href="/logout">
+            <i class="tim-icons icon-pin"></i>
+            <p>Logout</p>
+          </a>
+        </li>
+
       </ul>
     </div>
   </div>
   <div class="container" id="cont">
     <div class="loaderCont">
-        <div class="loader"></div>
+      <div class="loader"></div>
 
-      </div>
     </div>
+  </div>
 
 
-  
+
 </body>
 <script>
-  container=document.getElementsByClassName("container");
+  container = document.getElementsByClassName("container");
   var ab;
-var a;
-var numberCase;
+  var a;
+  var numberCase;
 
 
-  function onLoad(){
- 
-    
-        var firebaseConfig = {
-        apiKey: "AIzaSyCyGye-WMomVLnTRQ-8wlsXzSUJuJQG1do",
-        authDomain: "nefirebase-7624e.firebaseapp.com",
-        databaseURL: "https://nefirebase-7624e.firebaseio.com",
-        projectId: "nefirebase-7624e",
-        storageBucket: "",
-        messagingSenderId: "75788997805",
-        appId: "1:75788997805:web:cfa574138eef051c352224"
-        };
-// Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+  function onLoad() {
 
-        var database=firebase.database()
-        var ref=database.ref("/users")
-        ref.on('value',gotData,errData)
-        function gotData(response){
-        console.log(response)
-        ab=response.val();
-        a=Object.keys(ab) 
 
-        function getHTML(arr){
-          var s=""
-          var ds=""
-          var ns=""
-          var defaulters=new Array()
-          var normal=new Array()
-          var count=1
-          console.log(arr)   
-         
+    axios.get('http://821c1c7a.ngrok.io/')
+      .then(function (response) {
+        console.log(response.data);
 
-          for(var i=0;i<arr.length;i++){
-            console.log("AAAAAAAAAAAAA     "+ab[arr[i]].CurrentMonth)
-            if(ab[arr[i]]["moneyRecieved"]=='1'){
+        ab = response.data
+        a = Object.keys(ab)
+
+        function getHTML(arr) {
+          var s = ""
+          var ds = ""
+          var ns = ""
+          var defaulters = new Array()
+          var normal = new Array()
+          var count = 1
+          console.log(arr)
+
+
+          for (var i = 0; i < arr.length; i++) {
+            console.log("AAAAAAAAAAAAA     " + ab[arr[i]].CurrentMonth)
+            if (ab[arr[i]]["moneyRecieved"] == '1') {
               normal.push(`${arr[i]}`)
-              
+
             }
-            else{
+            else {
               defaulters.push(`${arr[i]}`)
             }
-            
+
           }
           console.log(normal)
-        console.log(defaulters) 
+          console.log(defaulters)
 
-        for(var k=0;k<defaulters.length;k++){
-               
-            var elem=` <div class="card" onclick="modaldisplay(${defaulters[k]})">
+          for (var k = 0; k < defaulters.length; k++) {
+
+            var elem = ` <div class="card" onclick="modaldisplay(${defaulters[k]})">
     <h3 class="title">${defaulters[k]}</h3>
     <div class="bar">
       <div class="emptybar"></div>
@@ -133,13 +123,13 @@ var numberCase;
     </svg>
     </div>
   </div>`
-            ds=ds.concat(elem)
-            
+            ds = ds.concat(elem)
+
           }
-          s=s.concat(ds)
-          for(var k=0;k<normal.length;k++){
-                
-            var elem=` <div class="card" onclick="modaldisplay(${normal[k]})">
+          s = s.concat(ds)
+          for (var k = 0; k < normal.length; k++) {
+
+            var elem = ` <div class="card" onclick="modaldisplay(${normal[k]})">
     <h3 class="title">${normal[k]}</h3>
     <div class="bar">
       <div class="emptybar"></div>
@@ -151,67 +141,67 @@ var numberCase;
     </svg>
     </div>
   </div>`
-            ns=ns.concat(elem)
-           
+            ns = ns.concat(elem)
+
           }
-                 s=s.concat(ns)
+          s = s.concat(ns)
           return s
         }
 
 
 
-        var conten= getHTML(a)
-        console.log(conten+"AAAAAAA")
+        var conten = getHTML(a)
+        console.log(conten + "AAAAAAA")
 
-        document.getElementById("cont").innerHTML=conten
-
-
-
-        }
+        document.getElementById("cont").innerHTML = conten
 
 
-        function errData(err){
-          console.log(err)
-        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
 
-        }
-        onLoad()
 
-        //=================================================================================================================================//
-        //On load all things finish
+  }
+  onLoad()
 
-        // Get the modal
-        var modal = document.getElementById("myModal");
+  //=================================================================================================================================//
+  //On load all things finish
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+  // Get the modal
+  var modal = document.getElementById("myModal");
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-          container=document.getElementById("cont")
-          container.style.display="flow-root"
-        }
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-            container=document.getElementById("cont")
-          container.style.display="flow-root"
-          }
-        }
-        function modaldisplay(cno){
-         event.preventDefault()
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+    container = document.getElementById("cont")
+    container.style.display = "flow-root"
+  }
 
-        sessionStorage.setItem("cno",cno)
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      container = document.getElementById("cont")
+      container.style.display = "flow-root"
+    }
+  }
+  function modaldisplay(cno) {
+    event.preventDefault()
 
-        location.href="/indivisual"
-          
-        }
-        
+    sessionStorage.setItem("cno", cno)
+
+    location.href = "/indivisual"
+
+  }
+
 
 
 </script>
+
 </html>
